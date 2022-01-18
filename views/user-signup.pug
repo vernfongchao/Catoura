@@ -1,0 +1,20 @@
+extends layout.pug
+
+include utils.pug
+
+block content
+  +validationErrorSummary(errors)
+  form(action='/users/register' method='post')
+    input(type='hidden' name='_csrf' value=csrfToken)
+    +field('First Name', 'firstName', user.firstName)
+    +field('Last Name', 'lastName', user.lastName)
+    +field('Username', 'userName', user.userName)
+    +field('Favorite Food', 'favFood', user.favFood)
+    +field('Email Address', 'emailAddress', user.email)
+    +field('Password', 'password', user.hashedPassword, 'password')
+    +field('Confirm Password', 'confirmPassword', '', 'password')
+    div(class='py-4')
+      button(type='submit' class='btn btn-primary') Register
+      a(href='/' class='btn btn-warning ml-2') Cancel
+  div
+    p: a(href='/users/login') Already have an account?
