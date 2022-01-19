@@ -5,4 +5,14 @@ html
     meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
     title #{title}
   body
+    nav
+      a(href='/') Catoura
+      if locals.authenticated 
+        span Welcome #{user.firstName}
+        form(action="/users/logout" method= 'post') 
+          button Logout
+      else 
+        span 
+          a(href='/users/login') Login 
+          a(href="/users/signup") Signup 
     block content

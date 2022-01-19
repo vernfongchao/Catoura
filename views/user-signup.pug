@@ -13,8 +13,8 @@ block content
     +field('Email Address', 'email', user.email)
     +field('Password', 'password', user.hashedPassword, 'password')
     +field('Confirm Password', 'confirmPassword', '', 'password')
-    div(class='py-4')
-      button(type='submit' class='btn btn-primary') Register
-      a(href='/' class='btn btn-warning ml-2') Cancel
+    div()
+      button(type='submit') Signup
+      a(href='/') Cancel
   div
     p: a(href='/users/login') Already have an account?

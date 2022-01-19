@@ -32,7 +32,7 @@ const userValidators = [
           }
         });
     }),
-  check('hashedPassword')
+  check('password')
     .exists({ checkFalsy: true })
     .withMessage('Please provide a value for Password')
     .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/, 'g')
@@ -45,12 +45,22 @@ const userValidators = [
         throw new Error('Confirm Password does not match Password');
       }
       return true;
-    }),
+    })
 ]
+
+const loginValidators = [
+  check('email')
+    .exists({ checkFalsy: true })
+    .withMessage('Please provide a value for Email Address'),
+  check('password')
+    .exists({ checkFalsy: true })
+    .withMessage('Please provide a value for Password'),
+];
 
 
 module.exports = {
   csrfProtection,
   userValidators,
+  loginValidators,
   asyncHandler
 }
