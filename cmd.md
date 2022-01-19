@@ -21,6 +21,20 @@ npx sequelize model:generate --name Answer --attributes content:string,userId:in
 npx sequelize model:generate --name Comment --attributes
 content:string,userId:integer,answerId:integer
 
+npx sequelize model:generate --name Topic --attributes title:string,userId:integer
+
+npx sequelize model:generate --name Question_Topic --attributes questionId:integer,topicId:integer
+
+npx sequelize model:generate --name Reply --attributes content:string,userId:integer,commentId:integer
+
+npx sequelize model:generate --name Question_Upvote --attributes userId:integer,questionId:integer
+
+npx sequelize model:generate --name Question_Downvote --attributes userId:integer,questionId:integer
+
+npx sequelize model:generate --name Answer_Upvote --attributes userId:integer,answerId:integer
+
+npx sequelize model:generate --name Answer_Downvote --attributes userId:integer,answerId:integer
+
 
 npm install csurf
 npm install express-validator

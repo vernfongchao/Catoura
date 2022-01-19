@@ -28,7 +28,26 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {});
   User.associate = function(models) {
-    // associations can be defined here
+    User.hasMany(models.Question, {foreignKey: 'userId'});
+    User.hasMany(models.Answers, {foreignKey: 'userId'});
+    User.hasMany(models.Replies, {foreignKey: 'userId'});
+    User.hasMany(models.Topic, {foreignKey: 'userId'});
+    User.belongsToMany(models.Answer, {
+      through: 'Answer_Upvote',
+      foreignKey: 'userId',
+      otherKey: 'answerId'});
+    User.belongsToMany(models.Answer, {
+      through: 'Answer_Downvote',
+      foreignKey: 'userId',
+      otherKey: 'answerId'});
+    User.belongsToMany(models.Question, {
+      through: 'Question_Upvote',
+      foreignKey: 'userId',
+      otherKey: 'questionId'});
+    User.belongsToMany(models.Question, {
+      through: 'Question_Downvote',
+      foreignKey: 'userId',
+      otherKey: 'questionId'});
   };
   return User;
 };

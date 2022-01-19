@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     answerId: DataTypes.INTEGER
   }, {});
   Comment.associate = function(models) {
-    // associations can be defined here
+    Comment.hasMany(models.Reply, {foreignKey: 'commentId'});
   };
   return Comment;
 };
