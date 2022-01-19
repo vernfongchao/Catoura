@@ -38,8 +38,8 @@ router.post('/login', csrfProtection, loginValidators,
         const passwordMatch = await bcrypt.compare(password, user.hashedPassword.toString());
         if (passwordMatch) {
           login(req, res, user);
-
-          return res.redirect('/questions');
+          //reroute to questions
+          return res.redirect('/');
         }
       }
       errors.push('Login failed for the email address and/or password given');
@@ -85,7 +85,8 @@ router.post('/signup', userValidators, csrfProtection, asyncHandler(async (req, 
   if (validatorErrors.isEmpty()) {
     await user.save();
     login(req, res, user);
-    res.redirect('/questions');
+    //re-route to questions
+    res.redirect('/');
   } else {
     const errors = validatorErrors.array().map((error) => error.msg);
     res.render('user-signup', {
