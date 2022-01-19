@@ -29,8 +29,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   User.associate = function(models) {
     User.hasMany(models.Question, {foreignKey: 'userId'});
-    User.hasMany(models.Answers, {foreignKey: 'userId'});
-    User.hasMany(models.Replies, {foreignKey: 'userId'});
+    User.hasMany(models.Answer, {foreignKey: 'userId'});
+    User.hasMany(models.Reply, {foreignKey: 'userId'});
     User.hasMany(models.Topic, {foreignKey: 'userId'});
     User.belongsToMany(models.Answer, {
       through: 'Answer_Upvote',

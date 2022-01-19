@@ -14,7 +14,7 @@ module.exports = {
       },
       content: {
         allowNull: false,
-        type: Sequelize.STRING(10000)
+        type: Sequelize.STRING(5000)
       },
       userId: {
         allowNull: false,

@@ -6,19 +6,21 @@ module.exports = (sequelize, DataTypes) => {
     userId: DataTypes.INTEGER
   }, {});
   Question.associate = function (models) {
-    Questions.belongsTo(models.User, { foreignKey: 'userId' });
-    Questions.hasMany(models.Answer, { foreignKey: 'questionId' });
-    Questions.belongsToMany(models.Topic, {
+    Question.belongsTo(models.User, { foreignKey: 'userId' });
+    Question.hasMany(models.Answer, { foreignKey: 'questionId' });
+    Question.hasMany(models.Question_Upvote,{foreignKey:'questionId'})
+    Question.hasMany(models.Question_Downvote,{foreignKey:'questionId'})
+    Question.belongsToMany(models.Topic, {
       through: 'Question_Topic',
       foreignKey: 'questionId',
       otherKey: 'topicId'
     });
-    Questions.belongsToMany(models.User, {
+    Question.belongsToMany(models.User, {
       through: 'Question_Upvote',
       foreignKey: 'questionId',
       otherKey: 'userId'
     });
-    Questions.belongsToMany(models.User, {
+    Question.belongsToMany(models.User, {
       through: 'Question_Downvote',
       foreignKey: 'questionId',
       otherKey: 'userId'
