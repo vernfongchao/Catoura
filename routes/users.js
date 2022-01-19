@@ -9,10 +9,7 @@ const bcrypt = require('bcryptjs')
 
 router.get('/demo', asyncHandler(async (req, res) => {
 
-  const user = await User.findOne({
-    where:
-      { email: 'demo@demo.com' }
-  });
+  const user = await User.findByPk(1)
   login(req, res, user);
   return res.redirect('/questions');
 
