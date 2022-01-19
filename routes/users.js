@@ -9,9 +9,11 @@ const bcrypt = require('bcryptjs')
 
 router.get('/demo', asyncHandler(async (req, res) => {
 
-  const user = await User.findByPk(1)
+  const user = await User.findOne({
+    where: { email: 'demo@demo.com' }
+  })
   login(req, res, user);
-  return res.redirect('/questions');
+  return res.redirect('/');
 
 }))
 
@@ -102,5 +104,3 @@ router.post('/logout', (req, res) => {
 
 
 module.exports = router;
-
-
