@@ -4,12 +4,15 @@ const { check, validationResult } = require('express-validator');
 const { login, logout } = require('../auth');
 const db = require('../db/models');
 const { User } = db;
-const { csrfProtection, userValidators,loginValidators, asyncHandler } = require('./utils');
+const { csrfProtection, userValidators, loginValidators, asyncHandler } = require('./utils');
 const bcrypt = require('bcryptjs')
 
-router.get('/demo', asyncHandler(async(req,res)=>{
+router.get('/demo', asyncHandler(async (req, res) => {
 
-  const user = await User.findByPk(9);
+  const user = await User.findOne({
+    where:
+      { email: 'demo@demo.com' }
+  });
   login(req, res, user);
   return res.redirect('/questions');
 
@@ -21,36 +24,36 @@ router.get('/login', csrfProtection, asyncHandler(async (req, res) => {
 }));
 
 router.post('/login', csrfProtection, loginValidators,
-asyncHandler(async (req, res) => {
-  const {
-    email,
-    password,
-  } = req.body;
+  asyncHandler(async (req, res) => {
+    const {
+      email,
+      password,
+    } = req.body;
 
-  let errors = []
-  const validatorErrors = validationResult(req);
+    let errors = []
+    const validatorErrors = validationResult(req);
 
-  if (validatorErrors.isEmpty()) {
-    const user = await User.findOne({ where: { email } });
-    if (user !== null) {
-      const passwordMatch = await bcrypt.compare(password, user.hashedPassword.toString());
-      if (passwordMatch) {
-        login(req, res, user);
+    if (validatorErrors.isEmpty()) {
+      const user = await User.findOne({ where: { email } });
+      if (user !== null) {
+        const passwordMatch = await bcrypt.compare(password, user.hashedPassword.toString());
+        if (passwordMatch) {
+          login(req, res, user);
 
-        return res.redirect('/questions');
+          return res.redirect('/questions');
+        }
       }
+      errors.push('Login failed for the email address and/or password given');
+    } else {
+      errors = validatorErrors.array().map((error) => error.msg);
     }
-    errors.push('Login failed for the email address and/or password given');
-  } else {
-    errors = validatorErrors.array().map((error) => error.msg);
-  }
-  res.render('user-login', {
-    title: 'Login',
-    email,
-    errors,
-    csrfToken: req.csrfToken(),
-  });
-}));
+    res.render('user-login', {
+      title: 'Login',
+      email,
+      errors,
+      csrfToken: req.csrfToken(),
+    });
+  }));
 
 router.get('/signup', csrfProtection, asyncHandler(async (req, res) => {
   const user = User.build();

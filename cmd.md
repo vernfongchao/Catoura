@@ -36,6 +36,9 @@ npx sequelize model:generate --name Answer_Upvote --attributes userId:integer,an
 npx sequelize model:generate --name Answer_Downvote --attributes userId:integer,answerId:integer
 
 
+npx sequelize seed:generate --name usersSeed
+npx dotenv sequelize db:seed:all
+
 npm install csurf
 npm install express-validator
 npm install bcryptjs
