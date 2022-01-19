@@ -9,9 +9,10 @@ html
     nav(id= 'nav-bar')
       a(href='/' class= 'logo') Catoura
       if locals.authenticated 
-        span Welcome #{user.firstName}
+        div(class= 'nav-login-signout')
+          span(class= 'nav-signout') Welcome #{user.firstName}
           form(action="/users/logout" method= 'post') 
-            button Logout
+            button(class= 'nav-button right') Logout
       else 
         div(class= 'nav-login-signout')
           form(action="/users/login" method= 'get') 

@@ -20,6 +20,9 @@ h1 {
     margin-right: 50px;
     align-items: center;
 }
+.nav-login-signout{
+    display: flex;
+}
 .nav-button{
     border-color: rgb(185, 43, 39);
     background-color: rgb(185, 43, 39);
