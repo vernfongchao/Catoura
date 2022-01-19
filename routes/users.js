@@ -31,7 +31,7 @@ asyncHandler(async (req, res) => {
         // return res.redirect('/questions');
       }
     }
-    errors.push('Login failed for the provided email address and password');
+    errors.push('Login failed for the email address and password given');
   } else {
     errors = validatorErrors.array().map((error) => error.msg);
   }

@@ -9,12 +9,12 @@ const { User } = db;
 const userValidators = [
   check("firstName")
     .exists({ checkFalsy: true })
-    .withMessage("Please provide your first name")
+    .withMessage("Please provide a first name")
     .isLength({ max: 25 })
     .withMessage(`Please shorten your first name to 25 characters`),
   check("lastName")
     .exists({ checkFalsy: true })
-    .withMessage("Please provide your last name")
+    .withMessage("Please provide a last Name")
     .isLength({ max: 25 })
     .withMessage(`Please shorten your last name to 25 characters.`),
   check("email")
@@ -34,15 +34,15 @@ const userValidators = [
     }),
   check('password')
     .exists({ checkFalsy: true })
-    .withMessage('Please provide a value for Password')
+    .withMessage('Please provide a value for password')
     .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/, 'g')
     .withMessage('Password must contain at least 1 lowercase letter, uppercase letter, number, and special character (i.e. "!@#$%^&*")'),
   check("confirmPassword")
     .exists({ checkFalsy: true })
-    .withMessage('Please provide a value for Confirm Password')
+    .withMessage('Please provide a value for confirm password')
     .custom((value, { req }) => {
       if (value !== req.body.password) {
-        throw new Error('Confirm Password does not match Password');
+        throw new Error('Passwords do not match');
       }
       return true;
     })
