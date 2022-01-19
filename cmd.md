@@ -15,6 +15,11 @@ npx dotenv sequelize db:create
 npx dotenv sequelize model:generate --name User --attributes firstName:string,lastName:string,userName:string,email:string,hashedPassword:string,favFood:string
 
 
+npm install csurf
+npm install express-validator
+npm install bcryptjs
+
+
 Creates a branch
 git branch user-auth-setup
 
@@ -31,8 +36,6 @@ git pull origin user-auth-setup
 
 Merge changes of main into this branch
 git merge main
-
-
 
 WorkFlow
 
