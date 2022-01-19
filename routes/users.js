@@ -7,6 +7,14 @@ const { User } = db;
 const { csrfProtection, userValidators,loginValidators, asyncHandler } = require('./utils');
 const bcrypt = require('bcryptjs')
 
+router.get('/demo', asyncHandler(async(req,res)=>{
+
+  const user = await User.findByPk(9);
+  login(req, res, user);
+  return res.redirect('/questions');
+
+}))
+
 
 router.get('/login', csrfProtection, asyncHandler(async (req, res) => {
   res.render('user-login', { title: 'Hello From user Route', csrfToken: req.csrfToken() });
@@ -23,15 +31,16 @@ asyncHandler(async (req, res) => {
   const validatorErrors = validationResult(req);
 
   if (validatorErrors.isEmpty()) {
-    const user = await db.User.findOne({ where: { email } });
+    const user = await User.findOne({ where: { email } });
     if (user !== null) {
       const passwordMatch = await bcrypt.compare(password, user.hashedPassword.toString());
       if (passwordMatch) {
         login(req, res, user);
-        // return res.redirect('/questions');
+
+        return res.redirect('/questions');
       }
     }
-    errors.push('Login failed for the email address and password given');
+    errors.push('Login failed for the email address and/or password given');
   } else {
     errors = validatorErrors.array().map((error) => error.msg);
   }
@@ -74,7 +83,7 @@ router.post('/signup', userValidators, csrfProtection, asyncHandler(async (req, 
   if (validatorErrors.isEmpty()) {
     await user.save();
     login(req, res, user);
-    // res.redirect('/questions');
+    res.redirect('/questions');
   } else {
     const errors = validatorErrors.array().map((error) => error.msg);
     res.render('user-signup', {
@@ -93,3 +102,5 @@ router.post('/logout', (req, res) => {
 
 
 module.exports = router;
+
+

@@ -12,7 +12,14 @@ create user catoura_user with password 'userpassword' createdb
 npx dotenv sequelize db:create
 <<OR>> npx dotenv sequelize-cli db:migrate
 
-npx dotenv sequelize model:generate --name User --attributes firstName:string,lastName:string,userName:string,email:string,hashedPassword:string,favFood:string
+npx sequelize model:generate --name User --attributes firstName:string,lastName:string,userName:string,email:string,hashedPassword:string,favFood:string
+
+npx sequelize model:generate --name Question --attributes title:string,content:string,userId:integer
+
+npx sequelize model:generate --name Answer --attributes content:string,userId:integer,questionId:integer
+
+npx sequelize model:generate --name Comment --attributes
+content:string,userId:integer,answerId:integer
 
 
 npm install csurf

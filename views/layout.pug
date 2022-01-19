@@ -15,8 +15,10 @@ html
             button(class= 'nav-button right') Logout
       else 
         div(class= 'nav-login-signout')
+          form(action="/users/demo" method= 'get') 
+            button(class= 'nav-button') Demo User
           form(action="/users/login" method= 'get') 
-            button(class= 'nav-button') Login
+            button(class= 'nav-button right') Login
           form(action="/users/signup" method= 'get') 
             button(class= 'nav-button right') Signup
     block content

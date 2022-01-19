@@ -7,6 +7,6 @@ mixin validationErrorSummary(errors)
           li= error
 
 mixin field(labelText, fieldName, fieldValue, fieldType = 'text')
-  div(class='form-group')
-    label(for=fieldName)= labelText
-    input(type=fieldType id=fieldName name=fieldName value=fieldValue class='form-control')
+  div(class= 'form-input-container')
+    label(for=fieldName class= 'form-text')= labelText
+    input(type=fieldType id=fieldName name=fieldName value=fieldValue class='form-input')
