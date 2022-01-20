@@ -11,6 +11,7 @@ block content
                 th Upvotes
                 th Downvotes
                 th Delete
+                th Edit
             tbody
                 each answer in answers
                     tr
@@ -23,6 +24,7 @@ block content
                             form(action=`/answers/delete/${answer.id}` method='get')
                                 input(type='hidden' name='_csrf' value=csrfToken)
                                 button(type='submit') Delete
+                        td
                             form(action=`/answers/edit/${answer.id}` method='get')
                                 input(type='hidden' name='_csrf' value=csrfToken)
                                 button(type='submit') Edit
