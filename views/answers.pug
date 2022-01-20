@@ -20,8 +20,11 @@ block content
                         td= downvotes[answer.id]
                         td
                             //- a(href=`/users/answers/${answer.id}` role='button') Delete
-                            form(action=`/answers/${answer.id}` method='get')
+                            form(action=`/answers/delete/${answer.id}` method='get')
                                 input(type='hidden' name='_csrf' value=csrfToken)
                                 button(type='submit') Delete
+                            form(action=`/answers/edit/${answer.id}` method='get')
+                                input(type='hidden' name='_csrf' value=csrfToken)
+                                button(type='submit') Edit
     else
         h2 No answers yet :3

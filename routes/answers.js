@@ -1,11 +1,19 @@
 const express = require('express');
 const router = express.Router();
-const { validationResult } = require('express-validator');
+const { validationResult, check } = require('express-validator');
 const { login, logout, requireAuth } = require('../auth');
 const db = require('../db/models');
 const { User, Question, Answer_Upvote, Answer_Downvote, Answer } = db;
 const { csrfProtection, userValidators, loginValidators, asyncHandler } = require('./utils');
 const bcrypt = require('bcryptjs');
+
+const checkPermissions = (answer, currentUser) => {
+    if (answer.userId !== currentUser.id) {
+      const err = new Error('Illegal operation.');
+      err.status = 403; // Forbidden
+      throw err;
+    }
+  };
 
 
 router.get('/', asyncHandler(async (req, res) => {
@@ -44,7 +52,7 @@ router.get('/', asyncHandler(async (req, res) => {
 }));
 
 
-router.get('/:id(\\d+)', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
+router.get('/delete/:id(\\d+)', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
 
     const answerId = parseInt(req.params.id, 10);
 
@@ -55,11 +63,58 @@ router.get('/:id(\\d+)', requireAuth, csrfProtection, asyncHandler(async (req, r
         answer,
         csrfToken: req.csrfToken(),
     })
-
-
 }));
-router.post('/delete/:id(\\d+)', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
 
+router.get('/edit/:id(\\d+)', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
+
+    const answerId = parseInt(req.params.id, 10);
+
+    const answer = await db.Answer.findByPk(answerId);
+
+    res.render('answer-edit', {
+        title: 'Edit Answer',
+        answer,
+        csrfToken: req.csrfToken(),
+    })
+}));
+
+router.post('/edit/:id(\\d+)', csrfProtection, requireAuth, asyncHandler(async (req, res, next) => {
+
+
+    const answerId = parseInt(req.params.id, 10);
+    const answerToUpdate = await db.Answer.findByPk(answerId);
+    checkPermissions(answer, res.locals.user);
+
+    const {
+        content
+    } = req.body;
+
+    let userId = res.locals.user.id
+
+    const answer = {
+        content,
+        userId,
+        questionId: answerToUpdate.questionId
+    }
+
+    const validatorErrors = validationResult(req);
+
+    if (validatorErrors.isEmpty()) {
+        await answerToUpdate.update(answer)
+        res.redirect('/answers');
+    } else {
+        const errors = validatorErrors.array().map((error) => error.msg);
+
+        res.render('answer-edit', {
+            title: 'Edit Answer',
+            answer,
+            errors,
+            csrfToken: req.csrfToken(),
+        });
+    }
+}));
+
+router.post('/delete/:id(\\d+)', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
 
     if (!res.locals.authenticated) return res.redirect('/');
 
@@ -72,10 +127,7 @@ router.post('/delete/:id(\\d+)', requireAuth, csrfProtection, asyncHandler(async
 
 }));
 
-router.get('/add', csrfProtection, (req, res) => {
-
-
-    if (!res.locals.authenticated) return res.redirect('/');
+router.get('/add', requireAuth, csrfProtection, (req, res) => {
 
 
     const answer = Answer.build();
@@ -87,7 +139,15 @@ router.get('/add', csrfProtection, (req, res) => {
     });
 
 });
-router.post('/add', csrfProtection, requireAuth, asyncHandler(async (req, res, next) => {
+
+const answerValidator = [
+    check('content')
+      .exists({ checkFalsy: true })
+      .withMessage('Please provide a value for Content')
+      .isLength({ max: 5000 })
+      .withMessage('Content must not be more than 5000 characters long'),]
+
+router.post('/add', csrfProtection, requireAuth, answerValidator, asyncHandler(async (req, res, next) => {
     if (!res.locals.authenticated) return res.redirect('/');
     const {
         content,
@@ -102,11 +162,9 @@ router.post('/add', csrfProtection, requireAuth, asyncHandler(async (req, res, n
         questionId
     });
 
-
     const validatorErrors = validationResult(req);
 
     if (validatorErrors.isEmpty()) {
-
         res.redirect('/answers');
     } else {
         const errors = validatorErrors.array().map((error) => error.msg);

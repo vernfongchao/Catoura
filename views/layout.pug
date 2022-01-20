@@ -11,10 +11,11 @@ html
       if locals.authenticated
         div(class= 'nav-login-signout')
           span(class= 'nav-signout') Welcome #{user.firstName}
-          form(action="/answers/add" method= 'get')
-            button(class= 'nav-button right') Add Answer
-          form(action="/answers" method= 'get')
-            button(class= 'nav-button right') My Answers
+
+            a(href='/answers/add')
+              button(class= 'nav-button right') Add Answer
+            a(href='/answers')
+              button(class= 'nav-button right') My Answers
           form(action="/users/logout" method= 'post')
             button(class= 'nav-button right') Logout
       else
