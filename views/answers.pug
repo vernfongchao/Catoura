@@ -1,0 +1,17 @@
+extends layout.pug
+
+block content
+    h2 #{user.userName}'s Answers:
+    if answers && answers.length > 0
+        table
+            thead(class='thead-dark')
+                tr
+                th Content
+                th Username
+                th Question Id
+            tbody
+                each answer in answers
+                    tr
+                        td= answer.content
+                        td= answer.userId
+                        td= answer.questionId

@@ -103,5 +103,11 @@ router.post('/logout', (req, res) => {
   res.redirect('/users/login');
 });
 
+router.get('/answers', asyncHandler(async (req, res) => {
+  const answers = await db.Answer.findAll({ where: { userId: res.locals.user.id }});
+  const user = await User.findByPk(res.locals.user.id)
+  res.render('answers', { title: 'Answers', answers, user });
+  console.log(answers.length)
+}))
 
 module.exports = router;
