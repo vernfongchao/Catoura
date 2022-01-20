@@ -15,6 +15,12 @@ const checkPermissions = (answer, currentUser) => {
     }
 };
 
+let answerValidator = [
+    check('content')
+        .exists({ checkFalsy: true })
+        .withMessage('Please provide a value for Content')
+        .isLength({ max: 5000 })
+        .withMessage('Content must not be more than 5000 characters long'),]
 
 router.get('/', asyncHandler(async (req, res) => {
 
@@ -78,7 +84,7 @@ router.get('/edit/:id(\\d+)', requireAuth, csrfProtection, asyncHandler(async (r
     })
 }));
 
-router.post('/edit/:id(\\d+)', csrfProtection, requireAuth, asyncHandler(async (req, res, next) => {
+router.post('/edit/:id(\\d+)', csrfProtection, requireAuth, answerValidator, asyncHandler(async (req, res, next) => {
 
 
     const answerId = parseInt(req.params.id, 10);
@@ -107,7 +113,7 @@ router.post('/edit/:id(\\d+)', csrfProtection, requireAuth, asyncHandler(async (
 
         res.render('answer-edit', {
             title: 'Edit Answer',
-            answer,
+            answer: answerToUpdate,
             errors,
             csrfToken: req.csrfToken(),
         });
@@ -140,13 +146,6 @@ router.get('/add', requireAuth, csrfProtection, (req, res) => {
 
 });
 
-const answerValidator = [
-    check('content')
-        .exists({ checkFalsy: true })
-        .withMessage('Please provide a value for Content')
-        .isLength({ max: 5000 })
-        .withMessage('Content must not be more than 5000 characters long'),]
-
 router.post('/add', csrfProtection, requireAuth, answerValidator, asyncHandler(async (req, res, next) => {
 
     const {
@@ -156,7 +155,7 @@ router.post('/add', csrfProtection, requireAuth, answerValidator, asyncHandler(a
 
     let userId = res.locals.user.id
 
-    const answer = await Answer.create({
+    const answer = await Answer.build({
         content,
         userId,
         questionId
@@ -165,6 +164,7 @@ router.post('/add', csrfProtection, requireAuth, answerValidator, asyncHandler(a
     const validatorErrors = validationResult(req);
 
     if (validatorErrors.isEmpty()) {
+        await answer.save();
         res.redirect('/answers');
     } else {
         const errors = validatorErrors.array().map((error) => error.msg);
