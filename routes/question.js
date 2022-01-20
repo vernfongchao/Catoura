@@ -7,7 +7,11 @@ const { User, Question,Answer,Topic} = db;
 const { csrfProtection, questionValidators,asyncHandler } = require('./utils');
 
 
-router.get('/')
+router.get('/',asyncHandler(async(res,req)=>{
+    const questions = await Question.findAll()
+    res.json({questions})
+    
+}))
 
 
 
@@ -29,7 +33,7 @@ router.post('/', requireAuth, questionValidators, csrfProtection,asyncHandler(as
         content,
         userId
     });
-    console.log(question)
+
     const validatorErrors = validationResult(req);
     if (validatorErrors.isEmpty()) {
         await question.save();
@@ -64,7 +68,7 @@ router.get('/:id(\\d+)',csrfProtection, asyncHandler(async(req,res)=>{
                         }
             ]
         })
-    console.log(question)
+
     // res.render('question-details',{question})
 
     if(question){
@@ -77,6 +81,44 @@ router.get('/:id(\\d+)',csrfProtection, asyncHandler(async(req,res)=>{
         res.send('There is an error')
     }
 }));
+
+router.get('/:id(\\d+)/edit',csrfProtection,asyncHandler(async(req,res)=>{
+    const questionId = parseInt(req.params.id,10)
+    const question = await Question.findByPk(questionId)
+    console.log(question)
+    res.render('question-edit',{
+        title: question.title,
+        question,
+        csrfToken: req.csrfToken()
+    })
+}))
+
+router.post('/:id(\\d+)',questionValidators,csrfProtection, asyncHandler(async(req,res)=>{
+    const {userId} = req.session.auth
+    const {
+        title,
+        content
+    } = req.body;
+    
+    const question = Question.update({
+        title,
+        content,
+        userId
+    });
+    const validatorErrors = validationResult(req);
+    if (validatorErrors.isEmpty()) {
+        await question.save();
+        res.redirect(`/questions/${question.id}`);
+    } else {
+        const errors = validatorErrors.array().map((error) => error.msg);
+        res.render('question-edit.pug',{
+            title: question.title,
+            errors,
+            question,
+            csrfToken: req.csrfToken()
+        })
+    }
+}))
 
 
 

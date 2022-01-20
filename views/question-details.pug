@@ -15,6 +15,8 @@ block content
                 form(action=`/questions/${question.id}` method='post')
                     input(type="hidden" name="_csrf" value=csrfToken)
                     button(class="delete-button-post" type="submit") Delete
+                form(action= `/questions/${question.id}/edit` method= 'get')
+                    input(type="hidden" name="_csrf" value=csrfToken)
                     button(class="edit-button-post" type="submit") Edit
 
 
