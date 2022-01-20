@@ -15,7 +15,11 @@ router.get('/:id(\\d+)',csrfProtection, asyncHandler(async(req,res)=>{
                             model: Topic
                         },
                         {
-                            model:Answer
+                            model: Answer,
+                            include: User
+                        },
+                        {
+                            model: User
                         }
             ]
         })
@@ -32,7 +36,9 @@ router.get('/:id(\\d+)',csrfProtection, asyncHandler(async(req,res)=>{
         res.send('There is an error')
     }
 
-}))
+}));
+
+
 
 
 

@@ -3,13 +3,18 @@ extends layout.pug
 block content
     .page-container 
         .post-display
-            .question-text
+            .question-header
                 h1= question.title 
+                p= question.User.userName
+            .question-text 
                 p= question.content 
-                //- if locals.user.id === question.userId 
-                //-     form(action=`/questions/${question.id}` method='post')
-                //-         input(type="hidden" name="_csrf" value=csrfToken)
-                //-         button(class="delete-button-post" type="submit") Delete
-                //-         button(class="edit-button-post" type="submit") Edit
+            each answer in question.Answers
+                p= answer.User.userName
+                p= answer.content
+            if locals.authenticated && locals.user.id === question.User.id
+                form(action=`/questions/${question.id}` method='post')
+                    input(type="hidden" name="_csrf" value=csrfToken)
+                    button(class="delete-button-post" type="submit") Delete
+                    button(class="edit-button-post" type="submit") Edit
 
 
