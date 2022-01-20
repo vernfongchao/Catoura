@@ -3,9 +3,10 @@ const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const { login, logout, requireAuth } = require('../auth');
 const db = require('../db/models');
-const { User, Question, Answer_Upvote, Answer_Downvote } = db;
+const { User, Question, Answer_Upvote, Answer_Downvote, Answer, Comment } = db;
 const { csrfProtection, userValidators, loginValidators, asyncHandler } = require('./utils');
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
+const comment = require('../db/models/comment');
 
 router.get('/demo', asyncHandler(async (req, res) => {
 
@@ -120,7 +121,7 @@ router.get('/answers', asyncHandler(async (req, res) => {
       questions[id] = title
     }
 
-    console.log('My Questions ---> ', questions)
+    //console.log('My Questions ---> ', questions)
 
     // adding upvotes/downvotes to upvotes/downvotes object
     for (let i = 0; i < answers.length; i++) {
@@ -153,44 +154,13 @@ router.get('/answers/:id(\\d+)', requireAuth, csrfProtection, asyncHandler(async
 
 }));
 
-router.post('/answers/delete/:id(\\d+)', csrfProtection, asyncHandler(async (req, res) => {
+router.post('/answers/delete/:id(\\d+)', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
 
   const answerId = parseInt(req.params.id, 10);
-  const answer = await db.Answer.findByPk(answerId);
+  const answer = await Answer.findByPk(answerId)
 
-  let upvote = await Answer_Upvote.findAll({ where: { answerId } });
-  let downvote = await Answer_Downvote.findAll({ where: { answerId } });
-  let comment = await db.Comment.findAll({ where: { answerId } });
+  await answer.destroy()
 
-
-  /*upvote.forEach(element => {
-    await element.destroy()
-  })
-
-
-  downvote.forEach(element => {
-    await element.destroy()
-  })
-
-
-  comment.forEach(element => {
-    await element.destroy()
-  })*/
-
-  for (let i = 0; i < upvote.length; i++) {
-    await upvote[i].destroy()
-  }
-  for (let i = 0; i < downvote.length; i++) {
-    await downvote[i].destroy()
-  }
-  for (let i = 0; i < comment.length; i++) {
-    await comment[i].destroy()
-  }
-
-
-
-
-  await answer.destroy();
   res.redirect('/users/answers');
 
 }));

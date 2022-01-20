@@ -5,9 +5,9 @@ module.exports = (sequelize, DataTypes) => {
     userId: DataTypes.INTEGER,
     commentId: DataTypes.INTEGER
   }, {});
-  Reply.associate = function(models) {
-    Reply.belongsTo(models.User, {foreignKey: 'userId'});
-    Reply.belongsTo(models.Comment, {foreignKey: 'commentId'});
+  Reply.associate = function (models) {
+    Reply.belongsTo(models.User, { foreignKey: 'userId' });
+    Reply.belongsTo(models.Comment, { foreignKey: 'commentId' });
   };
   return Reply;
 };
