@@ -3,7 +3,7 @@ const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const { login, logout } = require('../auth');
 const db = require('../db/models');
-const { User, Question } = db;
+const { User, Question, Answer_Upvote, Answer_Downvote } = db;
 const { csrfProtection, userValidators, loginValidators, asyncHandler } = require('./utils');
 const bcrypt = require('bcryptjs')
 
@@ -104,18 +104,31 @@ router.post('/logout', (req, res) => {
 });
 
 router.get('/answers', asyncHandler(async (req, res) => {
-  const answers = await db.Answer.findAll({ where: { userId: res.locals.user.id }});
+  const answers = await db.Answer.findAll({ where: { userId: res.locals.user.id } });
   const user = await User.findByPk(res.locals.user.id);
   const questions = {}
-  for (let i=0;i<answers.length;i++){
-    //console.log("our Question id:",answers[i].dataValues.questionId)
-    let id=answers[i].dataValues.questionId;
-    let question= await Question.findByPk(id)
-    let title= question.title
-    questions[id]=title
+  const upvotes = {}
+  const downvotes = {}
+
+
+  // adding questions to questions object with id from answers
+  for (let i = 0; i < answers.length; i++) {
+    let id = answers[i].dataValues.questionId;
+    let question = await Question.findByPk(id)
+    let title = question.title
+    questions[id] = title
   }
-  console.log("this are questioooooons",questions)
-  res.render('answers', { title: 'Answers', answers, user, questions });
+
+  // adding upvotes/downvotes to upvotes/downvotes object
+  for (let i = 0; i < answers.length; i++) {
+    let id = answers[i].dataValues.id;
+    let upvote = await Answer_Upvote.findAll({ where: { answerId: id } })
+    let downvote = await Answer_Downvote.findAll({ where: { answerId: id } })
+    upvotes[id] = upvote.length
+    downvotes[id] = downvote.length
+  }
+
+  res.render('answers', { title: 'Answers', answers, user, questions, upvotes, downvotes });
 }))
 
 module.exports = router;

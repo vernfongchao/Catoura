@@ -8,10 +8,14 @@ block content
                 tr
                 th Question
                 th My Answer
+                th Upvotes
+                th Downvotes
             tbody
                 each answer in answers
                     tr
                         td= questions[answer.questionId]
                         td= answer.content
+                        td= upvotes[answer.id]
+                        td= downvotes[answer.id]
     else
         h2 No answers yet :3
