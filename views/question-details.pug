@@ -4,9 +4,8 @@ block content
     .page-container 
         .post-display
             .question-text
-                each question in questions
-                    h1= question.title 
-                    p= question.content 
+                h1= question.title 
+                p= question.content 
                 //- if locals.user.id === question.userId 
                 //-     form(action=`/questions/${question.id}` method='post')
                 //-         input(type="hidden" name="_csrf" value=csrfToken)

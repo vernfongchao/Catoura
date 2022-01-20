@@ -8,7 +8,7 @@ const { csrfProtection, userValidators, loginValidators, asyncHandler } = requir
 
 router.get('/:id(\\d+)',csrfProtection, asyncHandler(async(req,res)=>{
     const questionId = parseInt(req.params.id,10)
-    const questions = await Question.findByPk(questionId,
+    const question = await Question.findByPk(questionId,
         {
             include: [
                         {
@@ -19,13 +19,13 @@ router.get('/:id(\\d+)',csrfProtection, asyncHandler(async(req,res)=>{
                         }
             ]
         })
-    console.log(questions)
+    console.log(question)
     // res.render('question-details',{question})
 
-    if(questions){
+    if(question){
         res.render('question-details',{
-            title: questions.title ,
-            questions, 
+            title: question.title,
+            question, 
             csrfToken: req.csrfToken()
         })
     } else {
