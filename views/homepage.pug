@@ -1,0 +1,16 @@
+extends layout.pug
+
+block content
+  div
+  h2 Users:
+    each user in users
+      span= user.userName
+  h2 Questions:
+    each question in questions
+      span= question.title
+  h2 Answers:
+    each answer in answers
+      span= answer.content
+  h2 Replies:
+    each reply in replies
+      span= reply.content

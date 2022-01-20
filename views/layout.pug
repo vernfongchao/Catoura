@@ -3,6 +3,22 @@ html
   head
     meta(charset='utf-8')
     meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    link(rel="stylesheet" type="text/css" href="/stylesheets/index.css")
     title #{title}
   body
+    nav(id= 'nav-bar')
+      a(href='/' class= 'logo') Catoura
+      if locals.authenticated 
+        div(class= 'nav-login-signout')
+          span(class= 'nav-signout') Welcome #{user.firstName}
+          form(action="/users/logout" method= 'post') 
+            button(class= 'nav-button right') Logout
+      else 
+        div(class= 'nav-login-signout')
+          form(action="/users/demo" method= 'get') 
+            button(class= 'nav-button') Demo User
+          form(action="/users/login" method= 'get') 
+            button(class= 'nav-button right') Login
+          form(action="/users/signup" method= 'get') 
+            button(class= 'nav-button right') Signup
     block content
