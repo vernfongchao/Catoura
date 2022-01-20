@@ -6,12 +6,12 @@ block content
         table
             thead(class='thead-dark')
                 tr
-                th Content
-                th Username
-                th Question Id
+                th Question
+                th My Answer
             tbody
                 each answer in answers
                     tr
+                        td= questions[answer.questionId]
                         td= answer.content
-                        td= answer.userId
-                        td= answer.questionId
+    else
+        h2 No answers yet :3

@@ -106,10 +106,16 @@ router.post('/logout', (req, res) => {
 router.get('/answers', asyncHandler(async (req, res) => {
   const answers = await db.Answer.findAll({ where: { userId: res.locals.user.id }});
   const user = await User.findByPk(res.locals.user.id);
-  res.render('answers', { title: 'Answers', answers, user });
+  const questions = {}
   for (let i=0;i<answers.length;i++){
-    console.log("our Question id:",answers[i].dataValues.questionId)
+    //console.log("our Question id:",answers[i].dataValues.questionId)
+    let id=answers[i].dataValues.questionId;
+    let question= await Question.findByPk(id)
+    let title= question.title
+    questions[id]=title
   }
+  console.log("this are questioooooons",questions)
+  res.render('answers', { title: 'Answers', answers, user, questions });
 }))
 
 module.exports = router;
