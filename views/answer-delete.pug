@@ -5,7 +5,7 @@ block content
   div
     p Proceed with deleting this Answer?
   div
-    form(action=`/users/answers/delete/${answer.id}` method='post')
+    form(action=`/answers/delete/${answer.id}` method='post')
       input(type='hidden' name='_csrf' value=csrfToken)
       button(type='submit') Delete Answer
-      a(ref='/users/answers' role='button') Cancel
+      a(ref='/answers' role='button') Cancel

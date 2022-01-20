@@ -11,7 +11,9 @@ html
       if locals.authenticated
         div(class= 'nav-login-signout')
           span(class= 'nav-signout') Welcome #{user.firstName}
-          form(action="/users/answers" method= 'get')
+          form(action="/answers/add" method= 'get')
+            button(class= 'nav-button right') Add Answer
+          form(action="/answers" method= 'get')
             button(class= 'nav-button right') My Answers
           form(action="/users/logout" method= 'post')
             button(class= 'nav-button right') Logout
