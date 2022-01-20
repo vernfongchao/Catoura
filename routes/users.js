@@ -3,7 +3,7 @@ const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const { login, logout } = require('../auth');
 const db = require('../db/models');
-const { User } = db;
+const { User, Question } = db;
 const { csrfProtection, userValidators, loginValidators, asyncHandler } = require('./utils');
 const bcrypt = require('bcryptjs')
 
@@ -105,9 +105,11 @@ router.post('/logout', (req, res) => {
 
 router.get('/answers', asyncHandler(async (req, res) => {
   const answers = await db.Answer.findAll({ where: { userId: res.locals.user.id }});
-  const user = await User.findByPk(res.locals.user.id)
+  const user = await User.findByPk(res.locals.user.id);
   res.render('answers', { title: 'Answers', answers, user });
-  console.log(answers.length)
+  for (let i=0;i<answers.length;i++){
+    console.log("our Question id:",answers[i].dataValues.questionId)
+  }
 }))
 
 module.exports = router;
