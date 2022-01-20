@@ -165,6 +165,52 @@ router.post('/answers/delete/:id(\\d+)', requireAuth, csrfProtection, asyncHandl
 
 }));
 
+router.get('/answer/add', csrfProtection, (req, res) => {
+
+  const answer = Answer.build();
+
+  res.render('answer-form', {
+    title: 'Add Answer',
+    answer,
+    csrfToken: req.csrfToken(),
+  });
+
+});
+
+router.post('/answer/add', csrfProtection, requireAuth, asyncHandler(async (req, res, next) => {
+  const {
+    content,
+    questionId
+  } = req.body;
+
+  let userId = res.locals.user.id
+
+  const answer = Answer.create({
+    content,
+    userId,
+    questionId
+  });
+
+
+  const validatorErrors = validationResult(req);
+
+  if (validatorErrors.isEmpty()) {
+
+    // await answer.save();
+
+    res.redirect('/');
+  } else {
+    const errors = validatorErrors.array().map((error) => error.msg);
+
+    res.render('answer-form', {
+      title: 'Add Answer',
+      answer,
+      errors,
+      csrfToken: req.csrfToken(),
+    });
+  }
+}));
+
 module.exports = router;
 
 //comments upvote downtvotes
