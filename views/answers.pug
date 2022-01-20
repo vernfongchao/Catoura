@@ -10,6 +10,7 @@ block content
                 th My Answer
                 th Upvotes
                 th Downvotes
+                th Delete
             tbody
                 each answer in answers
                     tr
@@ -17,5 +18,10 @@ block content
                         td= answer.content
                         td= upvotes[answer.id]
                         td= downvotes[answer.id]
+                        td
+                            //- a(href=`/users/answers/${answer.id}` role='button') Delete
+                            form(action=`/users/answers/${answer.id}` method='get')
+                                input(type='hidden' name='_csrf' value=csrfToken)
+                                button(type='submit') Delete
     else
         h2 No answers yet :3
