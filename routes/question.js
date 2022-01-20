@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
-const { login, logout } = require('../auth');
+const { login, logout ,requireAuth} = require('../auth');
 const db = require('../db/models');
 const { User, Question,Answer,Topic} = db;
 const { csrfProtection, questionValidators,asyncHandler } = require('./utils');
@@ -11,11 +11,13 @@ router.get('/')
 
 
 
-router.get('/new',csrfProtection,asyncHandler(async(req,res)=>{
-    res.render('question-create',{title:'Question Form', csrfToken: req.csrfToken()})
+router.get('/new', requireAuth,csrfProtection,asyncHandler(async(req,res)=>{
+
+    res.render('question-create',{tsitle:'Question Form', csrfToken: req.csrfToken()})
 }))
 
-router.post('/', questionValidators, csrfProtection,asyncHandler(async(req,res)=>{
+router.post('/', requireAuth, questionValidators, csrfProtection,asyncHandler(async(req,res)=>{
+
     const {userId} = req.session.auth
     const {
         title,
