@@ -153,21 +153,42 @@ router.get('/answers/:id(\\d+)', requireAuth, csrfProtection, asyncHandler(async
 
 }));
 
-// router.get('/book/delete/:id(\\d+)', csrfProtection, asyncHandler(async (req, res) => {
-//   const bookId = parseInt(req.params.id, 10);
-//   const book = await db.Book.findByPk(bookId);
-//   res.render('book-delete', {
-//     title: 'Delete Book',
-//     book,
-//     csrfToken: req.csrfToken(),
-//   });
-// }));
-
 router.post('/answers/delete/:id(\\d+)', csrfProtection, asyncHandler(async (req, res) => {
 
   const answerId = parseInt(req.params.id, 10);
-
   const answer = await db.Answer.findByPk(answerId);
+
+  let upvote = await Answer_Upvote.findAll({ where: { answerId } });
+  let downvote = await Answer_Downvote.findAll({ where: { answerId } });
+  let comment = await db.Comment.findAll({ where: { answerId } });
+
+
+  /*upvote.forEach(element => {
+    await element.destroy()
+  })
+
+
+  downvote.forEach(element => {
+    await element.destroy()
+  })
+
+
+  comment.forEach(element => {
+    await element.destroy()
+  })*/
+
+  for (let i = 0; i < upvote.length; i++) {
+    await upvote[i].destroy()
+  }
+  for (let i = 0; i < downvote.length; i++) {
+    await downvote[i].destroy()
+  }
+  for (let i = 0; i < comment.length; i++) {
+    await comment[i].destroy()
+  }
+
+
+
 
   await answer.destroy();
   res.redirect('/users/answers');
@@ -175,3 +196,5 @@ router.post('/answers/delete/:id(\\d+)', csrfProtection, asyncHandler(async (req
 }));
 
 module.exports = router;
+
+//comments upvote downtvotes
