@@ -12,11 +12,12 @@ block content
                 p= answer.User.userName
                 p= answer.content
             if locals.authenticated && locals.user.id === question.User.id
-                form(action=`/questions/${question.id}` method='post')
-                    input(type="hidden" name="_csrf" value=csrfToken)
-                    button(class="delete-button-post" type="submit") Delete
+                button(class="delete-button-post") Delete
                 form(action= `/questions/${question.id}/edit` method= 'get')
                     input(type="hidden" name="_csrf" value=csrfToken)
                     button(class="edit-button-post" type="submit") Edit
-
-
+                .confirm-modal 
+                    p Are you sure you want to delete your question? It will be gone forever.
+                    form(action=`/questions/${question.id}/delete` method='post')
+                        input(type="hidden" name="_csrf" value=csrfToken)
+                        button(class="confirm-delete-button" type="submit") Confirm

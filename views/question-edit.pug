@@ -5,7 +5,7 @@ include utils
 block content
     +validationErrorSummary(errors)
     .create-question-form
-        form(action="/questions" method='post')
+        form(action=`/questions/${question.id}` method='post')
             input(type="hidden" name="_csrf" value=csrfToken)
             .question-input
                 label Title

@@ -48,3 +48,7 @@ h1 {
     align-items: center;
     justify-content: center;
 }
+
+.confirm-modal {
+    display: none
+}

@@ -6,7 +6,9 @@ module.exports = (sequelize, DataTypes) => {
     answerId: DataTypes.INTEGER
   }, {});
   Comment.associate = function(models) {
-    Comment.hasMany(models.Reply, {foreignKey: 'commentId'});
+    Comment.hasMany(models.Reply, {onDelete: 'cascade', hooks: true, foreignKey: 'commentId'});
+    Comment.belongsTo(models.Answer, {foreignKey: 'answerId'});
+
   };
   return Comment;
 };
