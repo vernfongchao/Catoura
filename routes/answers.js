@@ -9,11 +9,11 @@ const bcrypt = require('bcryptjs');
 
 const checkPermissions = (answer, currentUser) => {
     if (answer.userId !== currentUser.id) {
-      const err = new Error('Illegal operation.');
-      err.status = 403; // Forbidden
-      throw err;
+        const err = new Error('Illegal operation.');
+        err.status = 403; // Forbidden
+        throw err;
     }
-  };
+};
 
 
 router.get('/', asyncHandler(async (req, res) => {
@@ -83,7 +83,7 @@ router.post('/edit/:id(\\d+)', csrfProtection, requireAuth, asyncHandler(async (
 
     const answerId = parseInt(req.params.id, 10);
     const answerToUpdate = await db.Answer.findByPk(answerId);
-    checkPermissions(answer, res.locals.user);
+    checkPermissions(answerToUpdate, res.locals.user);
 
     const {
         content
@@ -142,13 +142,13 @@ router.get('/add', requireAuth, csrfProtection, (req, res) => {
 
 const answerValidator = [
     check('content')
-      .exists({ checkFalsy: true })
-      .withMessage('Please provide a value for Content')
-      .isLength({ max: 5000 })
-      .withMessage('Content must not be more than 5000 characters long'),]
+        .exists({ checkFalsy: true })
+        .withMessage('Please provide a value for Content')
+        .isLength({ max: 5000 })
+        .withMessage('Content must not be more than 5000 characters long'),]
 
 router.post('/add', csrfProtection, requireAuth, answerValidator, asyncHandler(async (req, res, next) => {
-    if (!res.locals.authenticated) return res.redirect('/');
+
     const {
         content,
         questionId
@@ -156,7 +156,7 @@ router.post('/add', csrfProtection, requireAuth, answerValidator, asyncHandler(a
 
     let userId = res.locals.user.id
 
-    const answer = Answer.create({
+    const answer = await Answer.create({
         content,
         userId,
         questionId
