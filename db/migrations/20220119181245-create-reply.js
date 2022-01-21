@@ -13,14 +13,16 @@ module.exports = {
         type: Sequelize.STRING(1000)
       },
       userId: {
+        onDelete: 'CASCADE',
         allowNull: false,
         type: Sequelize.INTEGER,
-        references: {model: 'Users'}
+        references: { model: 'Users' }
       },
       commentId: {
+        onDelete: 'CASCADE',
         allowNull: false,
         type: Sequelize.INTEGER,
-        references: {model: 'Comments'}
+        references: { model: 'Comments' }
       },
       createdAt: {
         allowNull: false,

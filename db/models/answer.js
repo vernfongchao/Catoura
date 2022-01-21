@@ -14,11 +14,13 @@ module.exports = (sequelize, DataTypes) => {
     Answer.belongsToMany(models.User, {
       through: 'Answer_Upvote',
       foreignKey: 'answerId',
-      otherKey: 'userId'});
+      otherKey: 'userId'
+    });
     Answer.belongsToMany(models.User, {
       through: 'Answer_Downvote',
       foreignKey: 'answerId',
-      otherKey: 'userId'});
+      otherKey: 'userId'
+    });
   };
   return Answer;
 };

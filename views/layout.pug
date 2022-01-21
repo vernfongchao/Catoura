@@ -9,19 +9,24 @@ html
   body
     nav(id= 'nav-bar')
       a(href='/' class= 'logo') Catoura
-      if locals.authenticated 
+      if locals.authenticated
         div(class= 'nav-login-signout')
           a(href='/questions/new')
             button(class= 'nav-button right') Add Question
           span(class= 'nav-signout') Welcome #{user.firstName}
-          form(action="/users/logout" method= 'post') 
+
+            a(href='/answers/add')
+              button(class= 'nav-button right') Add Answer
+            a(href='/answers')
+              button(class= 'nav-button right') My Answers
+          form(action="/users/logout" method= 'post')
             button(class= 'nav-button right') Logout
-      else 
+      else
         div(class= 'nav-login-signout')
-          form(action="/users/demo" method= 'get') 
+          form(action="/users/demo" method= 'get')
             button(class= 'nav-button') Demo User
-          form(action="/users/login" method= 'get') 
+          form(action="/users/login" method= 'get')
             button(class= 'nav-button right') Login
-          form(action="/users/signup" method= 'get') 
+          form(action="/users/signup" method= 'get')
             button(class= 'nav-button right') Signup
     block content
