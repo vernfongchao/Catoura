@@ -1,18 +1,25 @@
-extends layout.pug 
+extends layout.pug
 
-block content 
+block content
     h2 Topics
-    .topic-container 
+    .topic-container
         ul
-            each topic in topics 
+            each topic in topics
                 li
                     a(href=`/topics/${topic.id}`)= topic.title
-    .new-question-button 
+    .new-question-button
         a(href='/questions/new')
               button(class= 'nav-button right') Add Question
     h2 Questions
-    .question-container 
+    .question-container
         ul
             each question in questions
                 li
                     a(href=`/questions/${question.id}`)= question.title
+                    if locals.authenticated
+                        a(href=`/answers/${question.id}/add`)
+                            button Add Answer
+                        a(href='/')
+                            button Upvote
+                        a(href='/')
+                            button Downvote
