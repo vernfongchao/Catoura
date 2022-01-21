@@ -173,10 +173,13 @@ router.post('/:id(\\d+)/add', csrfProtection, requireAuth, answerValidator, asyn
     } else {
         const errors = validatorErrors.array().map((error) => error.msg);
 
+        const question = await Question.findByPk(questionId)
+
         res.render('answer-form', {
             title: 'Add Answer',
             answer,
             errors,
+            question,
             csrfToken: req.csrfToken(),
         });
     }
