@@ -1,6 +1,9 @@
 extends layout.pug
 
 block content
+    .new-question-button
+        a(href='/questions/new')
+              button(class= 'nav-button right') Add Question
     h2 My questions:
     if questions && questions.length > 0
         table

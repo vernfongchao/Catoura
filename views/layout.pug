@@ -12,13 +12,12 @@ html
       if locals.authenticated
         div(class= 'nav-login-signout')
           span(class= 'nav-signout') Welcome #{user.firstName}
-          a(href='/questions/new')
-            button(class= 'nav-button right') Add Question
-
-            a(href='/answers/add')
-              button(class= 'nav-button right') Add Answer
-            a(href='/answers')
-              button(class= 'nav-button right') My Answers
+          a(href='/questions/myquestions')
+            button(class= 'nav-button right') My Questions
+          a(href='/topics/new')
+            button(class= 'nav-button right') My Topics
+          a(href='/answers')
+            button(class= 'nav-button right') My Answers
           form(action="/users/logout" method= 'post')
             button(class= 'nav-button right') Logout
       else

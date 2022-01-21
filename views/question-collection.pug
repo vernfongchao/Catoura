@@ -1,6 +1,9 @@
 extends layout.pug
 
 block content
+    .new-question-button
+        a(href='/topics/new')
+              button(class= 'nav-button right') Add Topic
     h2 Topics
     .topic-container
         ul
