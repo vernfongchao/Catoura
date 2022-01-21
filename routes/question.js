@@ -3,7 +3,7 @@ const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const { login, logout, requireAuth } = require('../auth');
 const db = require('../db/models');
-const { User, Question, Answer, Topic } = db;
+const { User, Question, Answer, Topic,Comment } = db;
 const { csrfProtection, questionValidators, asyncHandler } = require('./utils');
 
 
@@ -78,14 +78,22 @@ router.get('/:id(\\d+)', csrfProtection, asyncHandler(async (req, res) => {
                 },
                 {
                     model: Answer,
-                    include: User
+                    include: [
+                        {
+                            model : User
+                        },
+                        {
+                            model: Comment,
+                            include: User
+                        }
+                    ]
                 },
                 {
                     model: User
                 }
             ]
         })
-
+    console.log(question.Answers[0].Comments)
     // res.render('question-details',{question})
 
     if (question) {
