@@ -1,0 +1,17 @@
+extends layout.pug
+
+include utils
+
+block content
+    +validationErrorSummary(errors)
+    .create-question-form
+        form(action=`/questions/${question.id}` method='post')
+            input(type="hidden" name="_csrf" value=csrfToken)
+            .question-input
+                label Title
+                input(type='text' name= 'title' value= `${question.title}`)
+            .question-content        
+                label Content
+                input(type='text' name= 'content' value= `${question.content}`)
+            .question-form-button 
+                button Submit

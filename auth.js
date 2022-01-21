@@ -11,11 +11,23 @@ const logout = (req, res) => {
 };
 
 const requireAuth = (req, res, next) => {
+
     if (!res.locals.authenticated) {
-        return res.redirect('/');
+        return res.redirect('/users/login');
     };
     return next();
 };
+
+// const requireAuthQuestion= (req,res,next) =>{
+//     if (!res.locals.authenticated) {
+//         var url = req.originalUrl;
+//         res.redirect('/users/login');
+//     } else{
+//         next()
+//     }
+// }
+
+
 
 const restoreUser = async (req, res, next) => {
     console.log(req.session) // Assist with debugging, delete after

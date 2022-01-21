@@ -20,6 +20,7 @@ router.get('/demo', asyncHandler(async (req, res) => {
 
 router.get('/login', csrfProtection, asyncHandler(async (req, res) => {
   res.render('user-login', { title: 'Hello From user Route', csrfToken: req.csrfToken() });
+  
 }));
 
 router.post('/login', csrfProtection, loginValidators,

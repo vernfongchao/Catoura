@@ -1,0 +1,18 @@
+extends layout.pug 
+
+block content 
+    h2 Topics
+    .topic-container 
+        ul
+            each topic in topics 
+                li
+                    a(href=`/topics/${topic.id}`)= topic.title
+    .new-question-button 
+        a(href='/questions/new')
+              button(class= 'nav-button right') Add Question
+    h2 Questions
+    .question-container 
+        ul
+            each question in questions
+                li
+                    a(href=`/questions/${question.id}`)= question.title

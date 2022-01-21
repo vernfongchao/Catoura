@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Question_Topic.associate = function(models) {
     // associations can be defined here
+    Question_Topic.belongsTo(models.Question, {foreignKey: 'questionId'})
   };
   return Question_Topic;
 };

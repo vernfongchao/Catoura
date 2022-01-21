@@ -9,6 +9,7 @@ const { sessionSecret } = require('./config');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const questionsRouter = require('./routes/question')
 const answersRouter = require('./routes/answers');
 const { restoreUser } = require('./auth');
 
@@ -39,8 +40,15 @@ app.use(session({
 
 app.use(restoreUser);
 
+app.use((req, res, next) => {
+  var url = req.originalUrl 
+  next();
+});
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/questions', questionsRouter);
+
 app.use('/answers', answersRouter);
 
 // catch 404 and forward to error handler
@@ -50,6 +58,7 @@ app.use(function (req, res, next) {
 
 // error handler
 app.use(function (err, req, res, next) {
+  console.log(err.message);
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

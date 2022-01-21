@@ -57,10 +57,27 @@ const loginValidators = [
     .withMessage('Please provide a value for Password'),
 ];
 
+const questionValidators = [
+  check("title")
+    .exists({ checkFalsy: true })
+    .withMessage("Please provide a question")
+    .isLength({ max: 255 })
+    .withMessage(`Please shorten your question`),
+  check("content")
+    .exists({ checkFalsy: true })
+    .withMessage("Please elaborate on your question")
+    .isLength({ max: 5000 })
+    .withMessage(`Too long won't read`)
+]
+
+
+
+
 
 module.exports = {
   csrfProtection,
   userValidators,
   loginValidators,
+  questionValidators,
   asyncHandler
 }
