@@ -3,7 +3,7 @@ const router = express.Router();
 const { validationResult, check } = require('express-validator');
 const { login, logout, requireAuth } = require('../auth');
 const db = require('../db/models');
-const { User, Question, Answer_Upvote, Answer_Downvote, Answer, Topic } = db;
+const { User, Question, Answer_Upvote, Answer_Downvote, Question_Topic, Answer, Topic } = db;
 const { csrfProtection, userValidators, loginValidators, asyncHandler } = require('./utils');
 const bcrypt = require('bcryptjs');
 
@@ -94,6 +94,22 @@ router.post('/:id(\\d+)/delete', requireAuth, csrfProtection, asyncHandler(async
     await topic.destroy()
 
     res.redirect('/topics/new');
+
+}));
+
+router.post('/questions/add', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
+
+    const {
+        topicId,
+        questionId,
+    } = req.body;
+
+    const jointq = await Question_Topic.create({
+        topicId,
+        questionId
+    });
+
+    res.redirect('/');
 
 }));
 

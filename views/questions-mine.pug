@@ -14,6 +14,7 @@ block content
                 th Downvotes
                 th Modify
                 th Add Topic
+                th
             tbody
                 each question in questions
                     tr
@@ -21,8 +22,17 @@ block content
                         td XXX
                         td XXX
                         td
-                            form(action=`/questions/${question.id}` method='get')
+                            form(action=`/questions/${question.id}` method='post')
                                 input(type='hidden' name='_csrf' value=csrfToken)
                                 button(type='submit') Edit / Delete
+                        form(action='/topics/questions/add' method='post')
+                            td
+                                select(name='topicId')
+                                    each topic in topics
+                                        option(value=topic.id) #{topic.title}
+                            td
+                                    input(type='hidden' name='_csrf' value=csrfToken)
+                                    input(type='hidden' name='questionId' value=question.id)
+                                    button(type='submit') add topic
     else
         h2 No answers yet :3

@@ -19,15 +19,16 @@ router.get('/', asyncHandler(async (req, res) => {
 }));
 
 
-router.get('/myquestions', requireAuth, asyncHandler(async (req, res) => {
+router.get('/myquestions', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
     //const userId = res.locals.user.id
     const questions = await Question.findAll({ where: { userId: res.locals.user.id } });
-    //const topics = await Topic.findAll();
+    const topics = await Topic.findAll();
 
     res.render('questions-mine', {
         title: 'Home',
         questions,
-        //topics
+        topics,
+        csrfToken: req.csrfToken()
     });
 }));
 
