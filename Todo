@@ -1,0 +1,24 @@
+Questions
+
+Change index path to questions page
+Change questions page to only query questions belonging to that logged in user
+
+
+Answers/Comments on Answers*
+
+Move add answers button from layout.pug to question details page
+Add add answer button to questions / finish coding the questionId
+
+
+Users can read all questions and answers on the same page
+
+
+
+
+
+
+Update User stories to reflect the site
+
+If we have time
+
+Style all questions routes
