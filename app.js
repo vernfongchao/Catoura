@@ -11,11 +11,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const questionsRouter = require('./routes/question')
 const answersRouter = require('./routes/answers');
-<<<<<<< HEAD
-const commentsRouter = require('./routes/comments')
-=======
 const commentsRouter = require('./routes/comments');
->>>>>>> main
 const { restoreUser } = require('./auth');
 
 const app = express();
@@ -53,10 +49,7 @@ app.use((req, res, next) => {
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/questions', questionsRouter);
-<<<<<<< HEAD
-=======
 app.use('/comments', commentsRouter);
->>>>>>> main
 app.use('/answers', answersRouter);
 app.use('/comments',commentsRouter)
 
