@@ -1,0 +1,23 @@
+extends layout.pug
+
+block content
+  if errors
+    div(role='alert')
+      p The following error(s) occurred:
+      ul
+        each error in errors
+          li= error
+    div(role='alert')
+      p The following error(s) occurred:
+      pre= JSON.stringify(error, null, 2)
+  form(action='/answers/add' method='post')
+    input(type='hidden' name='_csrf' value=csrfToken)
+    div(class='form-group')
+      label(for='questionId') Question ID
+      input(type='text' id='questionId' name='questionId')
+    div(class='form-group')
+      label(for='content') Content
+      input(type='text' id='content' name='content')
+
+      button(type='submit') Add Answer
+      a(href='/') Cancel
