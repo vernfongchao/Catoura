@@ -7,15 +7,13 @@ const { asyncHandler } = require('./utils')
 /* GET home page. */
 router.get('/', asyncHandler(async (req, res, next) => {
 
-  const users = await User.findAll()
-  const questions = await Question.findAll()
-  const answers = await Answer.findAll()
-  const replies = await Reply.findAll()
+  // const users = await User.findAll()
+  // const questions = await Question.findAll()
+  // const answers = await Answer.findAll()
+  // const replies = await Reply.findAll()
+  // res.render('homepage', { title: 'a/A Express Skeleton Home', users, questions, answers, replies });
 
-
-  res.render('homepage', { title: 'a/A Express Skeleton Home', users, questions, answers, replies });
-
-
+  res.redirect('/questions')
 
 }));
 

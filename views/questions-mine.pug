@@ -1,0 +1,25 @@
+extends layout.pug
+
+block content
+    h2 My questions:
+    if questions && questions.length > 0
+        table
+            thead(class='thead-dark')
+                tr
+                th my Questions
+                th Upvotes
+                th Downvotes
+                th Modify
+            tbody
+                each question in questions
+                    tr
+                        td= question.title
+                        td XXX
+                        td XXX
+                        td
+                            //- a(href=`/users/answers/${answer.id}` role='button') Delete
+                            form(action=`/questions/${question.id}` method='get')
+                                input(type='hidden' name='_csrf' value=csrfToken)
+                                button(type='submit') Edit / Delete
+    else
+        h2 No answers yet :3
