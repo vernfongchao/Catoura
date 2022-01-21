@@ -52,3 +52,61 @@ h1 {
 .confirm-modal {
     display: none
 }
+
+.q-container {
+    border:black solid 1px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+    border-radius: 10px;
+}
+
+.question-container {
+    border: black solid 1px;
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+textarea {
+    background-color: #dddddd;
+    color:#666666;
+    padding: 1em;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    outline: none;
+    font-family: Helvetica;
+    font-weight: 500;
+    font-size:12px;
+    line-height: 1.4;
+    width: 200px;
+    height: 100px;
+    transition: all 0.2s;
+    resize: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+}
+
+.question-title {
+    padding-top: 10px;
+    padding-bottom: 3px;
+    color: black;
+    font-family: helvetica;
+    font-size: 16px;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.post-username {
+    color:rgb(104, 104, 104);
+    padding: 1px;
+    font-family: helvetica;
+    font-size: 12px;
+    margin: 5px 5px;
+}

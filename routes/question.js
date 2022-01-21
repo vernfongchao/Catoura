@@ -7,21 +7,35 @@ const { User, Question, Answer, Topic } = db;
 const { csrfProtection, questionValidators, asyncHandler } = require('./utils');
 
 
-router.get('/', asyncHandler(async (req, res) => {
-    const questions = await Question.findAll();
+router.get('/', csrfProtection, asyncHandler(async (req, res) => {
+    const questions = await Question.findAll({
+        include: [
+            {
+                model: Topic
+            },
+            {
+                model: Answer,
+                include: User
+            },
+            {
+                model: User
+            }
+        ]
+    });
     const topics = await Topic.findAll();
 
     res.render('question-collection', {
         title: 'Home',
         questions,
-        topics
+        topics,
+        csrfToken: req.csrfToken()
     });
 }));
 
 
 
 router.get('/new', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
-    
+
     res.render('question-create', { title: 'Question Form', csrfToken: req.csrfToken() })
 }))
 

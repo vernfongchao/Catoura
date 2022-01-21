@@ -10,3 +10,13 @@ mixin field(labelText, fieldName, fieldValue, fieldType = 'text')
   div(class= 'form-input-container')
     label(for=fieldName class= 'form-text')= labelText
     input(type=fieldType id=fieldName name=fieldName value=fieldValue class='form-input')
+
+
+mixin addAnswer(questionId, csrfToken)
+  form(action='/answers/add' method='post')
+    input(type='hidden' name='_csrf' value=csrfToken)
+    input(type='hidden' id='questionId' name='questionId' value=questionId)
+    div(class='form-group')
+      label(for='content')
+      textarea(type='text' id='content' name='content' placeholder="Answer...")
+      button(type='submit' class='nav-button right') Submit Answer
