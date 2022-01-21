@@ -100,18 +100,20 @@ router.get('/:id(\\d+)', csrfProtection, asyncHandler(async (req, res) => {
         answers.push(answer)
     })
     answers.forEach((answer) =>{
-        comments.push(answer.Comments)
+        comments.push(...answer.Comments)
     })
-    console.log(comments)
+    // console.log(comments)
     comments.forEach((comment)=>{
-        users.push(comment)
+        users.push(comment.User)
     })
-    console.log(comments[0])
+    console.log(users)
+
     if (question) {
         res.render('question-details', {
             title: question.title,
             question,
             comments,
+            users,
             csrfToken: req.csrfToken()
         })
     } else {
