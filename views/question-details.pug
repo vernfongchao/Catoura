@@ -11,6 +11,9 @@ block content
             each answer in question.Answers
                 p= answer.User.userName
                 p= answer.content
+                div.comment-container
+                    //- each comment in comments 
+                    
             if locals.authenticated && locals.user.id === question.User.id
                 button(class="delete-button-post") Delete
                 form(action= `/questions/${question.id}/edit` method= 'get')
