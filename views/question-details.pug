@@ -12,7 +12,7 @@ block content
                 p= answer.User.userName
                 p= answer.content
                 .comment-container
-                    each comment in answer
+                    each comment in comments
                         //- p= comment.User.userName
                         p= comment.content
             if locals.authenticated && locals.user.id === question.User.id

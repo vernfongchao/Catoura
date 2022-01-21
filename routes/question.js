@@ -93,13 +93,25 @@ router.get('/:id(\\d+)', csrfProtection, asyncHandler(async (req, res) => {
                 }
             ]
         })
-    console.log(question.Answers[0].Comments)
-    // res.render('question-details',{question})
-
+    const answers = []
+    const comments = []
+    const users = []
+    question.Answers.forEach((answer)=>{
+        answers.push(answer)
+    })
+    answers.forEach((answer) =>{
+        comments.push(answer.Comments)
+    })
+    console.log(comments)
+    comments.forEach((comment)=>{
+        users.push(comment)
+    })
+    console.log(comments[0])
     if (question) {
         res.render('question-details', {
             title: question.title,
             question,
+            comments,
             csrfToken: req.csrfToken()
         })
     } else {
