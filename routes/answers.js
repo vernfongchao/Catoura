@@ -133,25 +133,29 @@ router.post('/delete/:id(\\d+)', requireAuth, csrfProtection, asyncHandler(async
 
 }));
 
-router.get('/add', requireAuth, csrfProtection, (req, res) => {
+router.get('/:id(\\d+)/add', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
 
 
     const answer = Answer.build();
+    const questionId = parseInt(req.params.id, 10);
+    const question = await Question.findByPk(questionId)
 
     res.render('answer-form', {
         title: 'Add Answer',
         answer,
+        question,
         csrfToken: req.csrfToken(),
     });
 
-});
+}));
 
-router.post('/add', csrfProtection, requireAuth, answerValidator, asyncHandler(async (req, res, next) => {
+router.post('/:id(\\d+)/add', csrfProtection, requireAuth, answerValidator, asyncHandler(async (req, res, next) => {
 
     const {
-        content,
-        questionId
+        content
     } = req.body;
+
+    const questionId = parseInt(req.params.id, 10);
 
     let userId = res.locals.user.id
 
