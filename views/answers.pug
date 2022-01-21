@@ -1,13 +1,13 @@
 extends layout.pug
 
 block content
-    h2 #{user.userName}'s Answers:
+    h2 My Answers:
     if answers && answers.length > 0
         table
             thead(class='thead-dark')
                 tr
                 th Question
-                th My Answer
+                th My Answers
                 th Upvotes
                 th Downvotes
                 th Delete

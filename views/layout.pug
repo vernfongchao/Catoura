@@ -11,9 +11,9 @@ html
       a(href='/' class= 'logo') Catoura
       if locals.authenticated
         div(class= 'nav-login-signout')
+          span(class= 'nav-signout') Welcome #{user.firstName}
           a(href='/questions/new')
             button(class= 'nav-button right') Add Question
-          span(class= 'nav-signout') Welcome #{user.firstName}
 
             a(href='/answers/add')
               button(class= 'nav-button right') Add Answer
