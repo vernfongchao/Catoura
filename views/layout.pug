@@ -11,6 +11,8 @@ html
       a(href='/' class= 'logo') Catoura
       if locals.authenticated 
         div(class= 'nav-login-signout')
+          a(href='/questions/new')
+            button(class= 'nav-button right') Add Question
           span(class= 'nav-signout') Welcome #{user.firstName}
           form(action="/users/logout" method= 'post') 
             button(class= 'nav-button right') Logout

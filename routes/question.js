@@ -7,17 +7,22 @@ const { User, Question, Answer, Topic } = db;
 const { csrfProtection, questionValidators, asyncHandler } = require('./utils');
 
 
-router.get('/', asyncHandler(async (res, req) => {
-    const questions = await Question.findAll()
-    res.json({ questions })
+router.get('/', asyncHandler(async (req, res) => {
+    const questions = await Question.findAll();
+    const topics = await Topic.findAll();
 
+    res.render('question-collection', {
+        title: 'Home',
+        questions,
+        topics
+    });
 }));
 
 
 
 router.get('/new', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
-
-    res.render('question-create', { tsitle: 'Question Form', csrfToken: req.csrfToken() })
+    
+    res.render('question-create', { title: 'Question Form', csrfToken: req.csrfToken() })
 }))
 
 router.post('/', requireAuth, questionValidators, csrfProtection, asyncHandler(async (req, res) => {
@@ -107,7 +112,7 @@ router.post('/:id(\\d+)', requireAuth, questionValidators, csrfProtection, async
     console.log(question);
     const validatorErrors = validationResult(req);
     if (validatorErrors.isEmpty()) {
-        await question.update({title, content, userId});
+        await question.update({ title, content, userId });
         res.redirect(`/questions/${question.id}`);
     } else {
         const errors = validatorErrors.array().map((error) => error.msg);
@@ -120,12 +125,11 @@ router.post('/:id(\\d+)', requireAuth, questionValidators, csrfProtection, async
     }
 }));
 
-router.post(`/:id(\\d+)/delete`, requireAuth, csrfProtection, asyncHandler(async(req, res) => {
+router.post(`/:id(\\d+)/delete`, requireAuth, csrfProtection, asyncHandler(async (req, res) => {
     const questionId = parseInt(req.params.id, 10);
     const question = await Question.findByPk(questionId);
-    console.log("   ========================      ", question);
     await question.destroy();
-    res.redirect('/questions/2');
+    res.redirect('/questions');
 }));
 
 
