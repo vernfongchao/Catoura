@@ -13,6 +13,7 @@ block content
                 th Upvotes
                 th Downvotes
                 th Modify
+                th Add Topic
             tbody
                 each question in questions
                     tr
@@ -20,7 +21,6 @@ block content
                         td XXX
                         td XXX
                         td
-                            //- a(href=`/users/answers/${answer.id}` role='button') Delete
                             form(action=`/questions/${question.id}` method='get')
                                 input(type='hidden' name='_csrf' value=csrfToken)
                                 button(type='submit') Edit / Delete
