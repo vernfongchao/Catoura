@@ -52,3 +52,10 @@ h1 {
 .confirm-modal {
     display: none
 }
+
+.submit-comment-container{
+    display: none
+}
+.add-comment-button{
+    display: none
+}

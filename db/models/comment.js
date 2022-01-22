@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
   Comment.associate = function(models) {
     Comment.hasMany(models.Reply, {onDelete: 'cascade', hooks: true, foreignKey: 'commentId'});
     Comment.belongsTo(models.Answer, {foreignKey: 'answerId'});
+    Comment.belongsTo(models.User, {foreignKey: 'userId'})
 
   };
   return Comment;
