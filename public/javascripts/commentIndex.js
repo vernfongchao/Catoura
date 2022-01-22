@@ -28,14 +28,14 @@ addComment.addEventListener('click', async(e) => {
     const commentForm = document.querySelector(".comment-form")
 
     const commentData = new FormData(commentForm);
-
+    const answerId = new commentData.get("answerId")
     const content = commentData.get("content")
-    const body = {content}
-
+    
+    const body = {content, answerId}
     modalComment.addEventListener("submit", async(e) =>{
         try{
             e.preventDefault
-            const res = await fetch(`/comments/answers/:answerId`, {
+            const res = await fetch(`/comments`, {
                 method: "POST",
                 body: JSON.stringify(body),
                 headers: {
@@ -46,6 +46,8 @@ addComment.addEventListener('click', async(e) => {
             console.log(e)
         }
     })
+
+
     // if (e.target == modal) {
     //     modal.style.display = "none";
     // }

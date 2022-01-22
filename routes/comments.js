@@ -20,11 +20,10 @@ router.delete('/:id(\\d+)/',csrfProtection,asyncHandler(async(req,res)=>{
     res.json({message: "Success"})
 }))
 
-router.post('/answers/:answerId',csrfProtection,asyncHandler(async(req,res)=>{
+router.post('/',csrfProtection,asyncHandler(async(req,res)=>{
     
-    const answerId = parseInt(req.params.answerId, 10)
     let userId = res.locals.user.id
-    const {content} = req.body
+    const {content,answerId} = req.body
     const comment = await Comment.build({
         content,
         userId,
