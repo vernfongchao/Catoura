@@ -14,6 +14,15 @@ block content
                 each answer in question.Answers
                     p= answer.User.userName
                     p= answer.content
+                    if locals.authenticated
+                        .add-comment-modal
+                            button(class= 'open-comment-button') add comment
+                                .submit-comment-container
+                                    form(action=`/comments/answers/${answer.id}` method ="post" class="comment-form")
+                                        input(type='hidden' name='_csrf' value=csrfToken)
+                                        label Comment
+                                        input(type="text" name= 'content' )
+                                        button(class= 'add-comment-button' type= "submit") Submit Comment
                     if comments
                         .comment-container
                             each comment in comments
@@ -23,7 +32,7 @@ block content
                                     if locals.authenticated && locals.user.id === comment.User.id
                                         form(action=`/comments/${comment.id}/delete` method="post") 
                                             input(type='hidden' name='_csrf' value=csrfToken)
-                                            button(id=comment.id).delete-comment-button Delete Comment
+                                            button(id=comment.id type="submit").delete-comment-button Delete Comment                                        
             if locals.authenticated && locals.user.id === question.User.id
                 button(class="delete-button-post") Delete
                 form(action= `/questions/${question.id}/edit` method= 'get')

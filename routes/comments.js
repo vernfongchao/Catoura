@@ -13,12 +13,29 @@ const bcrypt = require('bcryptjs');
 //     res.json({message: "Success"})
 // }))
 
-router.delete =('/:id(\\d+)/',csrfProtection,asyncHandler(async(req,res)=>{
-    const comment = await Comment.findByPk(req.params.id)
+router.delete('/:id(\\d+)/',csrfProtection,asyncHandler(async(req,res)=>{
+    const commentId = parseInt(req.params.id,10)
+    const comment = await Comment.findByPk(commentId)
     await comment.destroy()
     res.json({message: "Success"})
 }))
 
+router.post('/answers/:answerId',csrfProtection,asyncHandler(async(req,res)=>{
+    
+    const answerId = parseInt(req.params.answerId, 10)
+    let userId = res.locals.user.id
+    const {content} = req.body
+    const comment = await Comment.build({
+        content,
+        userId,
+        answerId
+    })
+    
+    await comment.save()
+}))
+
+
+router.put= 
 
 
 module.exports = router;
