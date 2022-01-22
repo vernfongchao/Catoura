@@ -1,8 +1,9 @@
 extends layout.pug
 
-include utils.pug
-
 block content
+    .new-question-button
+        a(href='/topics/new')
+              button(class= 'nav-button right') Add Topic
     h2 Topics
     .topic-container
         ul
@@ -11,14 +12,17 @@ block content
                     a(href=`/topics/${topic.id}`)= topic.title
     .new-question-button
         a(href='/questions/new')
-              button(class= 'nav-button right') Ask A Question
+            button(class= 'nav-button right') Add Question
     h2 Questions
     .question-container
-        ul(style="list-style: none")
+        ul
             each question in questions
-                .q-container
-                    li
-                        p(class="post-username")= `${question.User.userName}`
-                        a(href=`/questions/${question.id}` class="question-title")= question.title
-                        +addAnswer(`${question.id}`, csrfToken)
-                    br
+                li
+                    a(href=`/questions/${question.id}`)= question.title
+                    if locals.authenticated
+                        a(href=`/answers/${question.id}/add`)
+                            button Add Answer
+                        a(href='/')
+                            button Upvote
+                        a(href='/')
+                            button Downvote

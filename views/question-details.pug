@@ -1,23 +1,37 @@
 extends layout.pug
 
 block content
-    .page-container 
+    script(src='/javascripts/questionIndex.js' type='module')
+    script(src='/javascripts/commentIndex.js' type='module')
+    .page-container
         .post-display
             .question-header
-                h1= question.title 
+                h1= question.title
                 p= question.User.userName
-            .question-text 
-                p= question.content 
-            each answer in question.Answers
-                p= answer.User.userName
-                p= answer.content
+            .question-text
+                p= question.content
+            if question.Answers
+                each answer in question.Answers
+                    p= answer.User.userName
+                    p= answer.content
+                    if comments
+                        .comment-container
+                            each comment in comments
+                                div(id =`comment-container-${comment.id}`)
+                                    p= comment.content
+                                    p= comment.User.userName
+                                    if locals.authenticated && locals.user.id === comment.User.id
+                                        form(action=`/comments/${comment.id}/delete` method="post") 
+                                            input(type='hidden' name='_csrf' value=csrfToken)
+                                            button(id=comment.id).delete-comment-button Delete Comment
             if locals.authenticated && locals.user.id === question.User.id
                 button(class="delete-button-post") Delete
                 form(action= `/questions/${question.id}/edit` method= 'get')
                     input(type="hidden" name="_csrf" value=csrfToken)
                     button(class="edit-button-post" type="submit") Edit
-                .confirm-modal 
+                .confirm-modal
                     p Are you sure you want to delete your question? It will be gone forever.
                     form(action=`/questions/${question.id}/delete` method='post')
                         input(type="hidden" name="_csrf" value=csrfToken)
                         button(class="confirm-delete-button" type="submit") Confirm
+

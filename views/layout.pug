@@ -4,21 +4,19 @@ html
     meta(charset='utf-8')
     meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
     link(rel="stylesheet" type="text/css" href="/stylesheets/index.css")
-    script(src='/js/questionIndex.js')
     title #{title}
   body
     nav(id= 'nav-bar')
       a(href='/' class= 'logo') Catoura
       if locals.authenticated
         div(class= 'nav-login-signout')
-          a(href='/questions/new')
-            button(class= 'nav-button right') Ask A Question
           span(class= 'nav-signout') Welcome #{user.firstName}
-
-            a(href='/answers/add')
-              button(class= 'nav-button right') Add Answer
-            a(href='/answers')
-              button(class= 'nav-button right') My Answers
+          a(href='/questions/myquestions')
+            button(class= 'nav-button right') My Questions
+          a(href='/topics/new')
+            button(class= 'nav-button right') My Topics
+          a(href='/answers')
+            button(class= 'nav-button right') My Answers
           form(action="/users/logout" method= 'post')
             button(class= 'nav-button right') Logout
       else
