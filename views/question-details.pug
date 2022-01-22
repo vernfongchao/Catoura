@@ -17,6 +17,8 @@ block content
                             each comment in comments
                                 p= comment.content
                                 p= comment.User.userName
+                                if locals.authenticated && locals.user.id === comment.User.id
+                                    button(class="delete-comment-button" type="submit") Delete Comment
             if locals.authenticated && locals.user.id === question.User.id
                 button(class="delete-button-post") Delete
                 form(action= `/questions/${question.id}/edit` method= 'get')
@@ -27,3 +29,4 @@ block content
                     form(action=`/questions/${question.id}/delete` method='post')
                         input(type="hidden" name="_csrf" value=csrfToken)
                         button(class="confirm-delete-button" type="submit") Confirm
+    script(src='/javascripts/questionIndex.js' type='module')

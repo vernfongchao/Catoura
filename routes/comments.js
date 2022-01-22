@@ -3,9 +3,24 @@ const router = express.Router();
 const { validationResult, check } = require('express-validator');
 const { login, logout, requireAuth } = require('../auth');
 const db = require('../db/models');
-const { User, Question, Answer_Upvote, Answer_Downvote, Answer, Comment, Topic} = db;
+const { User, Question, Answer_Upvote, Answer_Downvote, Answer, Comment, Topic } = db;
 const { csrfProtection, userValidators, loginValidators, asyncHandler } = require('./utils');
 const bcrypt = require('bcryptjs');
+
+
+
+router.delete('/mycomments/:id(\\d+)', requireAuth, asyncHandler(async (req, res) => {
+
+    const commentId = parseInt(req.params.id, 10)
+
+    const comment = await Comment.findByPk(commentId)
+
+    await comment.destroy();
+
+    res.json({ success: 'Comment successfully deleted.' })
+
+}));
+
 
 
 // router.get('/', asyncHandler(async(req, res) => {
@@ -17,7 +32,7 @@ const bcrypt = require('bcryptjs');
 
 
 
-//     // const answerId = 
+//     // const answerId =
 //     const comments = await Comment.findAll({
 //         include : [
 //             {
@@ -33,7 +48,7 @@ const bcrypt = require('bcryptjs');
 //     const answers = await Answer.findAll();
 //     const comments = await Comment.findAll({where: {answerId}});
 //     // const questions = await Question.findByPk(2);
-    
+
 //     const questionId = parseInt(req.params.id, 10)
 //     const {question} = await Question.findByPk(questionId,
 //         {
@@ -55,7 +70,7 @@ const bcrypt = require('bcryptjs');
 //         })
 //         res.json({question});
 //     }))
-    
+
 // router.post('/comments', requireAuth, commentsValidator, csrfProtection, asyncHandler(async(req, res) => {
 //     const { content } = req.body;
 //     const comment = await Comment.build(content);
@@ -70,7 +85,7 @@ const bcrypt = require('bcryptjs');
 //     } else {
 //         const errors = validatorErrors.array().map((error) => error.msg)
 //     }
-    
+
 // }))
 
 
