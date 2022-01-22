@@ -8,36 +8,44 @@ const { csrfProtection, userValidators, loginValidators, asyncHandler } = requir
 const bcrypt = require('bcryptjs');
 
 
-router.get('/', asyncHandler(async(req, res) => {
-    // const answerId = 
-    const answers = await Answer.findByPk(2);
-    const comments = await Comment.findAll({where: {answerId}});
-    // const questions = await Question.findByPk(2);
+
+
+
+
+
+
+
+
+// router.get('/', asyncHandler(async(req, res) => {
+//     // const answerId = 
+//     const answers = await Answer.findByPk(2);
+//     const comments = await Comment.findAll({where: {answerId}});
+//     // const questions = await Question.findByPk(2);
     
-    const questionId = parseInt(req.params.id, 10)
-    const {question} = await Question.findByPk(questionId,
-        {
-            include: [
-                {
-                    model: Topic
-                },
-                {
-                    model: Answer,
-                    include: [
-                        {
-                            model: Comment,
-                            include: User
+//     const questionId = parseInt(req.params.id, 10)
+//     const {question} = await Question.findByPk(questionId,
+//         {
+//             include: [
+//                 {
+//                     model: Topic
+//                 },
+//                 {
+//                     model: Answer,
+//                     include: [
+//                         {
+//                             model: Comment,
+//                             include: User
                             
-                        }
-                    ]
-                },
-                {
-                    model: User
-                }
-            ]
-        })
-        res.json({question});
-    }))
+//                         }
+//                     ]
+//                 },
+//                 {
+//                     model: User
+//                 }
+//             ]
+//         })
+//         res.json({question});
+//     }))
     
 // router.post('/comments', requireAuth, commentsValidator, csrfProtection, asyncHandler(async(req, res) => {
 //     const { content } = req.body;
