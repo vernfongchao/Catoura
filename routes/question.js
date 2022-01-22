@@ -19,16 +19,15 @@ router.get('/', asyncHandler(async (req, res) => {
 }));
 
 
-router.get('/myquestions', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
+router.get('/myquestions', requireAuth, asyncHandler(async (req, res) => {
     //const userId = res.locals.user.id
     const questions = await Question.findAll({ where: { userId: res.locals.user.id } });
-    const topics = await Topic.findAll();
+    //const topics = await Topic.findAll();
 
     res.render('questions-mine', {
         title: 'Home',
         questions,
-        topics,
-        csrfToken: req.csrfToken()
+        //topics
     });
 }));
 
@@ -103,11 +102,9 @@ router.get('/:id(\\d+)', csrfProtection, asyncHandler(async (req, res) => {
     answers.forEach((answer) =>{
         comments.push(...answer.Comments)
     })
-    // console.log(comments)
     comments.forEach((comment)=>{
         users.push(comment.User)
     })
-    console.log(users)
 
     if (question) {
         res.render('question-details', {

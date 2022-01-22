@@ -1,33 +1,24 @@
-document.addEventListener("DOMContentLoaded", (e) => {
+console.log('hello froms comments')
 
-    const deleteComment = querySelectorAll('.delete-comment-button');
-    deleteComment.addEventListener("click", (e) => {
+const buttons = document.querySelectorAll('.delete-comment-button');
+for(let i = 0; i < buttons.length; i++){
+    const button = buttons[i]
+    button.addEventListener("click", async(e) => {
         try {
-            const res = await fetch('http://localhost:8080/comments/mycomments/:id(\\d+)', {});
+            e.preventDefault()
+            const commentId = e.target.id
+            const res = await fetch(`/comments/${commentId}/delete`,
+            {
+                method: "Delete",
+            })
+            const data = await res.json()
+            if(data.message === "Success"){
+                const container = document.querySelector(`#comment-container-${commentId}`)
+                container.remove()
+            }
         } catch (e) {
             console.log(e)
         }
     })
+}
 
-    try {
-        const res = await fetch('http://localhost:8080/comments');
-        const { questions } = await res.json();
-        const commentContainer = document.querySelector('.comment-container');
-        const commentHTML = questions.map(({ content }) => {
-            `<div class="comments">
-                <span class="comments-content">
-                    ${content}
-                </span>
-            </div>`
-        });
-        commentContainer.innerHTML = commentHTML.join("");
-
-    } catch (error) {
-
-        console.log(error);
-
-    }
-});
-
-
-//Id = review-${review.id}
