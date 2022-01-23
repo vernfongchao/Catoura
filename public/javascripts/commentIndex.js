@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
 
     const addComment = document.querySelectorAll('.open-comment-button');
-    e.preventDefault()
+
     addComment.forEach((answer) => {
 
         answer.addEventListener('click', async (e) => {
@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
                 commentFormTracker[e.target.id] = true;
 
                 let state = true
+                e.preventDefault()
                 e.stopPropagation()
 
                 const answerIdString = e.target.id.split('-')
@@ -46,40 +47,35 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
                     commentFormTracker = {};
 
-                    if (!commentFormTracker2[e.target.id]) {
+                
+                    e.preventDefault()
+                    e.stopPropagation()
+                    state = false
+                    const commentData = new FormData(commentForm);
+                    const answerId = commentData.get("answerId")
+                    const content = commentData.get("content")
+                    const _csrf = commentData.get("_csrf")
 
-                        commentFormTracker2[e.target.id] = 1;
-
-                        e.preventDefault()
-                        e.stopPropagation()
-                        state = false
-                        const commentData = new FormData(commentForm);
-                        const answerId = commentData.get("answerId")
-                        const content = commentData.get("content")
-                        const _csrf = commentData.get("_csrf")
-
-                        const body = { content, answerId, _csrf }
-                        console.log("Hello from submit")
-                        const res = await fetch(`/comments/`, {
-                            method: "POST",
-                            body: JSON.stringify(body),
-                            headers: {
-                                "Content-Type": "application/json",
-                            }
-                        })
-                        const data = await res.json()
-                        if (data.message === "Success") {
-                            if (state === false) {
-                                state = true
-                                const commentContent = document.querySelector(`#comment-content-${answerId}`)
-                                console.log(commentContent)
-                                commentContent.value = ""
-                                console.log("this works")
-                                modal.style.display = "none"
-                            }
+                    const body = { content, answerId, _csrf }
+                    console.log("Hello from submit")
+                    const res = await fetch(`/comments/`, {
+                        method: "POST",
+                        body: JSON.stringify(body),
+                        headers: {
+                            "Content-Type": "application/json",
+                        }
+                    })
+                    const data = await res.json()
+                    if (data.message === "Success") {
+                        if (state === false) {
+                            state = true
+                            const commentContent = document.querySelector(`#comment-content-${answerId}`)
+                            console.log(commentContent)
+                            commentContent.value = ""
+                            console.log("this works")
+                            modal.style.display = "none"
                         }
                     }
-
                 })
 
             }

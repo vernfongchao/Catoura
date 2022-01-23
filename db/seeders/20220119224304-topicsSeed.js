@@ -10,11 +10,11 @@ module.exports = {
       */
    return queryInterface.bulkInsert('Topics', [
      {title: 'Toys', userId: 1, createdAt: new Date(), updatedAt: new Date()},
-     {title: 'Food', userId: 1, createdAt: new Date(), updatedAt: new Date()},
-     {title: 'Owners', userId: 1, createdAt: new Date(), updatedAt: new Date()},
+     {title: 'Food', userId: 2, createdAt: new Date(), updatedAt: new Date()},
+     {title: 'Owners', userId: 2, createdAt: new Date(), updatedAt: new Date()},
      {title: 'Cat Politics', userId: 1, createdAt: new Date(), updatedAt: new Date()},
-     {title: 'Trees', userId: 1, createdAt: new Date(), updatedAt: new Date()},
-     {title: 'Poop Spots', userId: 1, createdAt: new Date(), updatedAt: new Date()},
+     {title: 'Trees', userId: 3, createdAt: new Date(), updatedAt: new Date()},
+     {title: 'Poop Spots', userId: 4, createdAt: new Date(), updatedAt: new Date()},
    ], {});
   },
 
