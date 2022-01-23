@@ -39,7 +39,6 @@ block content
                 form(action= `/questions/${question.id}/edit` method= 'get')
                     input(type="hidden" name="_csrf" value=csrfToken)
                     button(class="edit-button-post" type="submit") Edit
-<<<<<<< HEAD
                 .confirm-modal-overlay
                     .confirm-modal 
                         p Are you sure you want to delete your question? It will be gone forever.
@@ -47,11 +46,4 @@ block content
                             input(type="hidden" name="_csrf" value=csrfToken)
                             button(class="confirm-delete-button" type="submit") Confirm
                         button(class="cancel-delete-button" type="submit") Cancel
-=======
-                .confirm-modal
-                    p Are you sure you want to delete your question? It will be gone forever.
-                    form(action=`/questions/${question.id}/delete` method='post')
-                        input(type="hidden" name="_csrf" value=csrfToken)
-                        button(class="confirm-delete-button" type="submit") Confirm
->>>>>>> main
 
