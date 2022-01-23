@@ -12,18 +12,22 @@ block content
                 p= question.content
             if question.Answers
                 each answer in question.Answers
-                    p= answer.User.userName
-                    p= answer.content
-                    if comments
-                        .comment-container
-                            each comment in comments
-                                div(id =`comment-container-${comment.id}`)
-                                    p= comment.content
-                                    p= comment.User.userName
-                                    if locals.authenticated && locals.user.id === comment.User.id
-                                        form(action=`/comments/${comment.id}/delete` method="post") 
-                                            input(type='hidden' name='_csrf' value=csrfToken)
-                                            button(id=comment.id).delete-comment-button Delete Comment
+                    div(class=`answer-container${answer.id}`)
+                        p= answer.User.userName
+                        p= answer.content
+
+                            button(id=`${answer.id}` class= 'nav-button right comments-button') Show Comments
+                            div(id=`comment-container${answer.id}`)
+                    //- if comments
+                    //-     .comment-container
+                    //-         each comment in comments
+                    //-             div(id =`comment-container-${comment.id}`)
+                    //-                 p= comment.content
+                    //-                 p= comment.User.userName
+                    //-                 if locals.authenticated && locals.user.id === comment.User.id
+                    //-                     form(action=`/comments/${comment.id}/delete` method="post")
+                    //-                         input(type='hidden' name='_csrf' value=csrfToken)
+                    //-                         button(id=comment.id).delete-comment-button Delete Comment
             if locals.authenticated && locals.user.id === question.User.id
                 button(class="delete-button-post") Delete
                 form(action= `/questions/${question.id}/edit` method= 'get')
@@ -34,4 +38,3 @@ block content
                     form(action=`/questions/${question.id}/delete` method='post')
                         input(type="hidden" name="_csrf" value=csrfToken)
                         button(class="confirm-delete-button" type="submit") Confirm
-

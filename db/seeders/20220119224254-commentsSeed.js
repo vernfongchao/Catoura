@@ -10,6 +10,7 @@ module.exports = {
       */
    return queryInterface.bulkInsert('Comments', [
     {content: 'That sounds really risky. Idk about that.', userId: 3, answerId: 1, createdAt: new Date(), updatedAt: new Date()},
+    {content: "No don't jump!!! Really bad idea", userId: 2, answerId: 1, createdAt: new Date(), updatedAt: new Date()},
     {content: 'Sounds like a great idea. I would never turn food down.', userId: 3, answerId: 2, createdAt: new Date(), updatedAt: new Date()},
    ], {});
   },
