@@ -3,7 +3,7 @@ const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const { login, logout, requireAuth } = require('../auth');
 const db = require('../db/models');
-const { User, Question, Answer, Topic } = db;
+const { User, Question, Answer, Topic,Comment } = db;
 const { csrfProtection, questionValidators, asyncHandler } = require('./utils');
 
 
@@ -19,7 +19,7 @@ router.get('/', asyncHandler(async (req, res) => {
 }));
 
 
-router.get('/myquestions', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
+router.get('/myquestions', requireAuth, csrfProtection,asyncHandler(async (req, res) => {
     //const userId = res.locals.user.id
     const questions = await Question.findAll({ where: { userId: res.locals.user.id } });
     const topics = await Topic.findAll();
@@ -79,20 +79,40 @@ router.get('/:id(\\d+)', csrfProtection, asyncHandler(async (req, res) => {
                 },
                 {
                     model: Answer,
-                    include: User
+                    include: [
+                        {
+                            model : User
+                        },
+                        {
+                            model: Comment,
+                            include: User
+                        }
+                    ]
                 },
                 {
                     model: User
                 }
             ]
         })
-
-    // res.render('question-details',{question})
+    const answers = []
+    const comments = []
+    const users = []
+    question.Answers.forEach((answer)=>{
+        answers.push(answer)
+    })
+    answers.forEach((answer) =>{
+        comments.push(...answer.Comments)
+    })
+    comments.forEach((comment)=>{
+        users.push(comment.User)
+    })
 
     if (question) {
         res.render('question-details', {
             title: question.title,
             question,
+            comments,
+            users,
             csrfToken: req.csrfToken()
         })
     } else {

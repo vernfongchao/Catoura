@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const modal = document.querySelector('.confirm-modal');
         const background = document.querySelector('.confirm-modal-overlay');
         modal.style.display = "block";
+<<<<<<< HEAD
         background.style.display = "block";
         return
     })
@@ -18,6 +19,12 @@ document.addEventListener('DOMContentLoaded', () => {
         
         hideModal.style.display = "none";
         hideBackground.style.display = "none";
+=======
+        if (e.target == modal) {
+            modal.style.display = "none";
+        }
+        e.stopPropagation();
+>>>>>>> main
         return
     })
 })
