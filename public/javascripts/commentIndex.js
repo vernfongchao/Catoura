@@ -8,56 +8,85 @@ Then if for submitted then add the class back
 
 */
 document.addEventListener("DOMContentLoaded", (e) => {
+
+
+
+    let commentFormTracker = {}
+
+    let commentFormTracker2 = {}
+
+
     const addComment = document.querySelectorAll('.open-comment-button');
     e.preventDefault()
     addComment.forEach((answer) => {
-        answer.addEventListener('click', (e) => {
-            let state = true
-            e.stopPropagation()
+        // answer.addEventListener('click', (e) => {
+        //     let state = true
+        //     e.stopPropagation()
 
-            const answerIdString = e.target.id.split('-')
-            const answerId = answerIdString[2]
-
-            const modal = document.querySelector(`#submit-container-${answerId}`);
-            modal.style.display = "block";
+        answer.addEventListener('click', async (e) => {
 
 
-            
-            const commentForm = document.querySelector(`.comment-form-${answerId}`)
-            console.log('is this printing twice?=====')
+            if (!commentFormTracker[e.target.id]) {
+                console.log('HELLOOOOOO00OO0O0O0O00O')
 
-            commentForm.addEventListener("submit", async (e) => {
-                e.preventDefault()
+                commentFormTracker[e.target.id] = true;
+
+                let state = true
                 e.stopPropagation()
-                state = false
-                const commentData = new FormData(commentForm);
-                const answerId = commentData.get("answerId");
-                const content = commentData.get("content");
-                const _csrf = commentData.get("_csrf");
-                
-                const body = { content, answerId, _csrf }
-                console.log("Hello from submit")
-                const res = await fetch(`/comments/`, {
-                    method: "POST",
-                    body: JSON.stringify(body),
-                    headers: {
-                        "Content-Type": "application/json",
+
+                const answerIdString = e.target.id.split('-')
+                const answerId = answerIdString[2]
+
+                const modal = document.querySelector(`#submit-container-${answerId}`);
+                modal.style.display = "block";
+
+
+
+                const commentForm = document.querySelector(`#comment-form-${answerId}`)
+                console.log('is this printing twice?=====')
+
+                commentForm.addEventListener("submit", async (e) => {
+
+                    commentFormTracker = {};
+
+
+
+                    e.preventDefault()
+                    e.stopPropagation()
+                    state = false
+                    const commentData = new FormData(commentForm);
+                    const answerId = commentData.get("answerId")
+                    const content = commentData.get("content")
+                    const _csrf = commentData.get("_csrf")
+
+                    const body = { content, answerId, _csrf }
+                    console.log("Hello from submit")
+                    const res = await fetch(`/comments/`, {
+                        method: "POST",
+                        body: JSON.stringify(body),
+                        headers: {
+                            "Content-Type": "application/json",
+                        }
+                    })
+                    const data = await res.json()
+                    if (data.message === "Success") {
+                        if (state === false) {
+                            state = true
+                            const commentContent = document.querySelector(`#comment-content-${answerId}`)
+                            console.log(commentContent)
+                            commentContent.value = ""
+                            console.log("this works")
+                            modal.style.display = "none"
+                        }
                     }
                 })
-                const data = await res.json();
-                if(data.message === "Success"){
-                    if(state === false){
-                        state = true
-                        const commentContent = document.querySelector(`#comment-content-${answerId}`)
-                        console.log(commentContent)
-                        commentContent.value = ""
-                        console.log("this works")
-                        modal.style.display = "none"
-                    }
-                }
-            })
+
+            }
+
         })
-    
+
+
+
     })
 
     const buttons = document.querySelectorAll('.delete-comment-button');
@@ -132,7 +161,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
                   `
                     arr.push(block)
                 } else {
-                let block = `
+                    let block = `
                 <div class="comment-${comment.id}">
                   <div class="comment-body-${comment.id}">
                     <p class="card-text">${comment.User.userName}</p>
@@ -140,26 +169,22 @@ document.addEventListener("DOMContentLoaded", (e) => {
                   </div>
                 </div>
               `
-                arr.push(block)
+                    arr.push(block)
                 }
             }
         );
 
 
-        
-        
-        
-        
         commentContainer.innerHTML = arr.join("");
         console.log(answerContainer)
         answerContainer.appendChild(commentContainer);
-        
+
         const deleteCommentButton = document.querySelectorAll(".comment-delete-buttons");
 
         if (deleteCommentButton.length > 0) {
             for (let i = 0; i < deleteCommentButton.length; i++) {
 
-                deleteCommentButton[i].addEventListener('click', async(e) => {
+                deleteCommentButton[i].addEventListener('click', async (e) => {
                     const commentIdArr = e.target.id.split('-')
                     const commentId = commentIdArr[2]
                     console.log(`Hello from comment delete: ${commentId}`)
@@ -168,14 +193,14 @@ document.addEventListener("DOMContentLoaded", (e) => {
                             method: "delete"
                         });
                     const data = await res.json()
-                    if(data.message === "Success"){
+                    if (data.message === "Success") {
                         const commentContainer = document.querySelector(`.comment-${commentId}`)
                         commentContainer.remove()
                     }
                 })
             }
         }
-        
+
         let id = e.target.id
 
         if (!commentsTracker[id]) {
