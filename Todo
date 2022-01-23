@@ -1,17 +1,26 @@
-Questions
-
-Change index path to questions page
-Change questions page to only query questions belonging to that logged in user
 
 
-Answers/Comments on Answers*
 
-Move add answers button from layout.pug to question details page
-Add add answer button to questions / finish coding the questionId
+/questions
+Upvotes/Downvotes removed?
 
+/myQuestions
+typo
+Upvotes/Downvotes removed?
+Add topic redirect caues small error message on redirect
+Clickable link to myQuestions
 
-Users can read all questions and answers on the same page
+/questions/myquestions
+Change button to read add topic to this question
 
+/answers
+Upvotes/Downvotes removed?
+
+/topics/:id
+Clickable links to /question/:id page
+
+/topics/new
+Clickable links to Topics
 
 
 
