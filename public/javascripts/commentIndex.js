@@ -19,6 +19,9 @@ document.addEventListener("DOMContentLoaded", (e) => {
     const addComment = document.querySelectorAll('.open-comment-button');
 
     addComment.forEach((answer) => {
+        // answer.addEventListener('click', (e) => {
+        //     let state = true
+        //     e.stopPropagation()
 
         answer.addEventListener('click', async (e) => {
 
@@ -47,7 +50,8 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
                     commentFormTracker = {};
 
-                
+
+
                     e.preventDefault()
                     e.stopPropagation()
                     state = false
