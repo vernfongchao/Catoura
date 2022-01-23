@@ -7,11 +7,7 @@ const { User, Question, Answer_Upvote, Answer_Downvote, Answer, Comment, Topic} 
 const { csrfProtection, userValidators, loginValidators, asyncHandler } = require('./utils');
 const bcrypt = require('bcryptjs');
 
-// router.delete('/:id',asyncHandler(async(req,res)=>{
-//     const post = await Post.findByPk(req.params.id)
-//     await post.destroy()
-//     res.json({message: "Success"})
-// }))
+
 
 router.post('/:id(\\d+)/delete',csrfProtection,asyncHandler(async(req,res)=>{
     
@@ -40,7 +36,14 @@ router.post('/',csrfProtection,asyncHandler(async(req,res)=>{
     res.json({comment,message:"Success"})
 }))
 
+router.get('/:id(\\d+)', csrfProtection, asyncHandler(async (req, res) => {
 
+    const answerId = req.params.id;
+    const userId = res.locals.user.id
+    const comments = await Comment.findAll({ where: { answerId }, include: User });
 
+    res.json({userId,comments, message: "Success" });
+
+}));
 
 module.exports = router;
