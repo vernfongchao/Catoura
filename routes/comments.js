@@ -10,7 +10,7 @@ const bcrypt = require('bcryptjs');
 
 
 router.delete('/:id(\\d+)/delete',asyncHandler(async(req,res)=>{
-    
+
     const commentId = parseInt(req.params.id,10)
     const comment = await Comment.findByPk(commentId)
     console.log(comment)

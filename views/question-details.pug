@@ -21,7 +21,7 @@ block content
                             .add-comment-modal
                                 button(class= 'open-comment-button' id=`open-comment-${answer.id}`) add comment
                                 div(class= "submit-comment-container" id= `submit-container-${answer.id}`)
-                                    form(action=`/comments` method ="post" class=`comment-form-${answer.id}`)
+                                    form(action=`/comments` method ="post" id=`comment-form-${answer.id}`)
                                         input(type='hidden' name='_csrf' value=csrfToken)
                                         label Comment
                                         input(type="text" id=`comment-content-${answer.id}` name= 'content' )
@@ -36,17 +36,16 @@ block content
                     //-                 if locals.authenticated && locals.user.id === comment.User.id
                     //-                     form(action=`/comments/${comment.id}/delete` method="post")
                     //-                         input(type='hidden' name='_csrf' value=csrfToken)
-                    //-                         button(id=comment.id class='.delete-comment-button' type="submit") Delete Comment                                        
+                    //-                         button(id=comment.id class='.delete-comment-button' type="submit") Delete Comment
             if locals.authenticated && locals.user.id === question.User.id
                 button(class="delete-button-post") Delete
                 form(action= `/questions/${question.id}/edit` method= 'get')
                     input(type="hidden" name="_csrf" value=csrfToken)
                     button(class="edit-button-post" type="submit") Edit
                 .confirm-modal-overlay
-                    .confirm-modal 
+                    .confirm-modal
                         p Are you sure you want to delete your question? It will be gone forever.
                         form(action=`/questions/${question.id}/delete` method='post')
                             input(type="hidden" name="_csrf" value=csrfToken)
                             button(class="confirm-delete-button" type="submit") Confirm
                         button(class="cancel-delete-button" type="submit") Cancel
-
