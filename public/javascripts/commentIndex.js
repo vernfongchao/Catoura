@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
     const addComment = document.querySelectorAll('.open-comment-button');
     e.preventDefault()
     addComment.forEach((answer) => {
-        answer.addEventListener('click', async (e) => {
+        answer.addEventListener('click', (e) => {
             let state = true
             e.stopPropagation()
 
@@ -31,9 +31,9 @@ document.addEventListener("DOMContentLoaded", (e) => {
                 e.stopPropagation()
                 state = false
                 const commentData = new FormData(commentForm);
-                const answerId = commentData.get("answerId")
-                const content = commentData.get("content")
-                const _csrf = commentData.get("_csrf")
+                const answerId = commentData.get("answerId");
+                const content = commentData.get("content");
+                const _csrf = commentData.get("_csrf");
                 
                 const body = { content, answerId, _csrf }
                 console.log("Hello from submit")
@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
                         "Content-Type": "application/json",
                     }
                 })
-                const data = await res.json()
+                const data = await res.json();
                 if(data.message === "Success"){
                     if(state === false){
                         state = true
