@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
             answerContainer.remove();
             commentsTracker[e.target.id] = false;
             this.innerHTML = "Show Comments"
-            return
+            return;
         }
 
         const commentContainer = document.createElement("div");
@@ -67,7 +67,6 @@ document.addEventListener('DOMContentLoaded', () => {
             commentsTracker[id] = true;
             this.innerHTML = "Hide Comments"
         }
-
 
     }
 
