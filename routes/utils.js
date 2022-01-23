@@ -70,6 +70,14 @@ const questionValidators = [
     .withMessage(`Too long won't read`)
 ]
 
+const commentValidators = [
+  check("content")
+    .exists({ checkFalsy: true })
+    .withMessage("Please elaborate on your question")
+    .isLength({ max: 1000})
+    .withMessage(`Too long won't read`)
+]
+
 
 
 
@@ -79,5 +87,6 @@ module.exports = {
   userValidators,
   loginValidators,
   questionValidators,
+  commentValidators,
   asyncHandler
 }
