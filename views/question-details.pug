@@ -19,12 +19,12 @@ block content
                             div(id=`comment-container${answer.id}`)
                         if locals.authenticated
                             .add-comment-modal
-                                button(class= 'open-comment-button' id=`add-comment-${answer.id}`) add comment
+                                button(class= 'open-comment-button' id=`open-comment-${answer.id}`) add comment
                                 div(class= "submit-comment-container" id= `submit-container-${answer.id}`)
                                     form(action=`/comments` method ="post" class=`comment-form-${answer.id}`)
                                         input(type='hidden' name='_csrf' value=csrfToken)
                                         label Comment
-                                        input(type="text" name= 'content' )
+                                        input(type="text" id=`comment-content-${answer.id}` name= 'content' )
                                         input(type="hidden" name= "answerId" value= answer.id)
                                         button(class= 'add-comment-button' id=`add-comment-${answer.id}` type= "submit") Submit Comment
                     //- if comments

@@ -4,12 +4,12 @@ const { validationResult, check } = require('express-validator');
 const { login, logout, requireAuth } = require('../auth');
 const db = require('../db/models');
 const { User, Question, Answer_Upvote, Answer_Downvote, Answer, Comment, Topic} = db;
-const { csrfProtection, userValidators, loginValidators, asyncHandler } = require('./utils');
+const { csrfProtection, commentValidators, asyncHandler } = require('./utils');
 const bcrypt = require('bcryptjs');
 
 
 
-router.post('/:id(\\d+)/delete',csrfProtection,asyncHandler(async(req,res)=>{
+router.delete('/:id(\\d+)/delete',asyncHandler(async(req,res)=>{
     
     const commentId = parseInt(req.params.id,10)
     const comment = await Comment.findByPk(commentId)
@@ -18,13 +18,8 @@ router.post('/:id(\\d+)/delete',csrfProtection,asyncHandler(async(req,res)=>{
     res.json({message: "Success"})
 }))
 
-router.use((req,res,next)=>{
-    console.log("incoming router")
-    next()
-})
 
-router.post('/',csrfProtection,asyncHandler(async(req,res)=>{
-    console.log("hello from test @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+router.post('/', commentValidators,csrfProtection,asyncHandler(async(req,res)=>{
     let userId = res.locals.user.id
     const {content,answerId} = req.body
     const comment = await Comment.build({
@@ -32,17 +27,32 @@ router.post('/',csrfProtection,asyncHandler(async(req,res)=>{
         userId,
         answerId
     })
-    await comment.save()
-    res.json({comment,message:"Success"})
+    const validatorErrors = validationResult(req);
+    if (validatorErrors.isEmpty()) {
+        await comment.save()
+        res.json({message:"Success"})
+    } else {
+        const errors = validatorErrors.array().map((error) => error.msg);
+        res.render('question-create', {
+            title: 'Question Form',
+            question,
+            errors,
+            csrfToken: req.csrfToken(),
+        });
+    }
 }))
 
-router.get('/:id(\\d+)', csrfProtection, asyncHandler(async (req, res) => {
-
+router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
+    let userId;
     const answerId = req.params.id;
-    const userId = res.locals.user.id
     const comments = await Comment.findAll({ where: { answerId }, include: User });
+    if(res.locals.user) {
+        userId = res.locals.user.id
+        res.json({userId,comments, message: "Success" });
+    } else {
+        res.json({userId,comments, message: "Success" });
+    }
 
-    res.json({userId,comments, message: "Success" });
 
 }));
 
