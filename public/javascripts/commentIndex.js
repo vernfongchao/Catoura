@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
 
     const addComment = document.querySelectorAll('.open-comment-button');
-    e.preventDefault()
+
     addComment.forEach((answer) => {
         // answer.addEventListener('click', (e) => {
         //     let state = true
@@ -32,6 +32,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
                 commentFormTracker[e.target.id] = true;
 
                 let state = true
+                e.preventDefault()
                 e.stopPropagation()
 
                 const answerIdString = e.target.id.split('-')
@@ -173,6 +174,10 @@ document.addEventListener("DOMContentLoaded", (e) => {
                 }
             }
         );
+
+
+
+
 
 
         commentContainer.innerHTML = arr.join("");

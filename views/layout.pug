@@ -7,7 +7,8 @@ html
     title #{title}
   body
     nav(id= 'nav-bar')
-      a(href='/' class= 'logo') Catoura
+      a(href='/' class= 'logo')
+        img(src="/images/catuora_logo_2.png" class= "picture-logo")
       if locals.authenticated
         div(class= 'nav-login-signout')
           span(class= 'nav-signout') Welcome #{user.firstName}

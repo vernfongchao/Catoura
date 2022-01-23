@@ -1,19 +1,20 @@
 h1 {
     color: #555555;
 }
-
+a:link {
+    text-decoration: none;
+  }
 #nav-bar {
     height: 60px;
     width: 100%;
-    background-color: beige;
+    background-color:rgb(255,255,255);
     display: flex;
     border-bottom: 1px solid black;
 }
-.logo{
-    text-decoration: none;
-    color: rgb(185, 43, 39);
-    font-size: 50px;
+.picture-logo{
+    height: 100%;
 }
+
 .nav-login-signout{
     display: flex;
     margin-left: auto;
@@ -35,6 +36,39 @@ h1 {
 .nav-button.right{
     margin-left: 20px;
 }
+
+.questions-details-container{
+    display: flex;
+}
+.topic-container{
+    margin-left: 5%;
+    margin-top: 100px;
+    display:flex;
+    flex-direction: column;
+}
+
+.topic-ul-container {
+    list-style-type: none;
+    font-size: 20px;
+}
+
+
+.question-container{
+    margin-left: 20%;
+    margin-top: 100px;
+    display:flex;
+    flex-direction: column;
+}
+
+.question-ul-container{
+    list-style-type: none;
+
+}
+
+.questions-collection-conntent{
+    font-size: 15px;
+}
+
 
 .signup-form{
     width: 500px;

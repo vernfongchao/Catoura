@@ -31,14 +31,6 @@ router.post('/', commentValidators,csrfProtection,asyncHandler(async(req,res)=>{
     if (validatorErrors.isEmpty()) {
         await comment.save()
         res.json({message:"Success"})
-    } else {
-        const errors = validatorErrors.array().map((error) => error.msg);
-        res.render('question-create', {
-            title: 'Question Form',
-            question,
-            errors,
-            csrfToken: req.csrfToken(),
-        });
     }
 }))
 
