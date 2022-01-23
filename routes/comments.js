@@ -13,15 +13,22 @@ const bcrypt = require('bcryptjs');
 //     res.json({message: "Success"})
 // }))
 
-router.delete('/:id(\\d+)/',csrfProtection,asyncHandler(async(req,res)=>{
+router.post('/:id(\\d+)/delete',csrfProtection,asyncHandler(async(req,res)=>{
+    
     const commentId = parseInt(req.params.id,10)
     const comment = await Comment.findByPk(commentId)
+    console.log(comment)
     await comment.destroy()
     res.json({message: "Success"})
 }))
 
+router.use((req,res,next)=>{
+    console.log("incoming router")
+    next()
+})
+
 router.post('/',csrfProtection,asyncHandler(async(req,res)=>{
-    
+    console.log("hello from test @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
     let userId = res.locals.user.id
     const {content,answerId} = req.body
     const comment = await Comment.build({
@@ -29,8 +36,8 @@ router.post('/',csrfProtection,asyncHandler(async(req,res)=>{
         userId,
         answerId
     })
-    
     await comment.save()
+    res.json({comment,message:"Success"})
 }))
 
 

@@ -16,14 +16,14 @@ block content
                     p= answer.content
                     if locals.authenticated
                         .add-comment-modal
-                            button(class= 'open-comment-button') add comment
-                                .submit-comment-container
-                                    form(action=`/comments` method ="post" class="comment-form")
-                                        input(type='hidden' name='_csrf' value=csrfToken)
-                                        label Comment
-                                        input(type="text" name= 'content' )
-                                        input(type="hidden" name= "answerId" value= answer.id)
-                                        button(class= 'add-comment-button' type= "submit") Submit Comment
+                            button(class= 'open-comment-button' id=`add-comment-${answer.id}`) add comment
+                            div(class= "submit-comment-container" id= `submit-container-${answer.id}`)
+                                form(action=`/comments` method ="post" class=`comment-form-${answer.id}`)
+                                    input(type='hidden' name='_csrf' value=csrfToken)
+                                    label Comment
+                                    input(type="text" name= 'content' )
+                                    input(type="hidden" name= "answerId" value= answer.id)
+                                    button(class= 'add-comment-button' id=`add-comment-${answer.id}` type= "submit") Submit Comment
                     if comments
                         .comment-container
                             each comment in comments
@@ -31,7 +31,7 @@ block content
                                     p= comment.content
                                     p= comment.User.userName
                                     if locals.authenticated && locals.user.id === comment.User.id
-                                        form(action=`/comments/${comment.id}/delete` method="post") 
+                                        form(action=`/comments/${comment.id}/delete` method="post")
                                             input(type='hidden' name='_csrf' value=csrfToken)
                                             button(id=comment.id class='.delete-comment-button' type="submit") Delete Comment                                        
             if locals.authenticated && locals.user.id === question.User.id
