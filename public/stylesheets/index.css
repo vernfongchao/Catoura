@@ -105,6 +105,27 @@ a:link {
     height: 100%;
 } */
 
+textarea {
+    background-color: #dddddd;
+    color:#666666;
+    padding: 1em;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    outline: none;
+    font-family: Helvetica;
+    font-weight: 500;
+    font-size:12px;
+    line-height: 1.4;
+    width: 200px;
+    height: 100px;
+    transition: all 0.2s;
+    resize: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+}
+
 .submit-comment-container{
     display: none
 }

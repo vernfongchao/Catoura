@@ -10,6 +10,9 @@ block content
                 p= question.User.userName
             .question-text
                 p= question.content
+            if question.Topics 
+                each topic in question.Topics 
+                    p= topic.title
             if question.Answers
                 each answer in question.Answers
                     div(class=`answer-container${answer.id}`)

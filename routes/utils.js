@@ -78,6 +78,13 @@ const commentValidators = [
     .withMessage(`Too long won't read`)
 ]
 
+const topicValidators = [
+  check("topicId")
+    .exists({ checkFalsy: true })
+    .withMessage("Please select a topic")
+]
+
+
 
 
 
@@ -88,5 +95,6 @@ module.exports = {
   loginValidators,
   questionValidators,
   commentValidators,
+  topicValidators,
   asyncHandler
 }
