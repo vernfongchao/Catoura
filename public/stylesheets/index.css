@@ -4,6 +4,9 @@ h1 {
 a:link {
     text-decoration: none;
   }
+body{
+    background-color: rgb(241,242,242);
+}
 #nav-bar {
     height: 60px;
     width: 100%;
