@@ -13,7 +13,8 @@ block content
   form(action=`/answers/${question.id}/add` method='post')
     input(type='hidden' name='_csrf' value=csrfToken)
     div(class='form-group')
-      label(for='content') Content
-      input(type='text' id='content' name='content')
-      button(type='submit') Add Answer
+      label(for='content')= question.title
+      textarea(id='content' name='content') 
+      //- input(type='text' id='content' name='content')
+      button(type='submit') Add Answer  
       a(href='/') Cancel

@@ -14,7 +14,8 @@ block content
     input(type='hidden' name='_csrf' value=csrfToken)
     div(class='form-group')
       label(for='content') Content
-      input(type='text' id='content' value=answer.content name='content')
+      textarea(name='content' id='content')= answer.content
+      //- input(type='text' id='content' value=answer.content name='content')
 
-      button(type='submit') Edit Answer
+      button(type='submit') Submit 
       a(href='/') Cancel
