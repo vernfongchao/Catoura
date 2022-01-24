@@ -7,6 +7,6 @@ block content
             each topic in topics
                 li
                     a(href=`/topics/${topic.id}`)= topic.title
-    if locals.authenticated
+    if locals.authenticated 
         a(href='/topics/new')
                 button(class= 'nav-button right') Add Topic

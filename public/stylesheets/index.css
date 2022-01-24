@@ -270,14 +270,14 @@ input{
     justify-content: center;
 }
 
-.post-display {
+/* .post-display {
     background-color: white;
     width: 550px;
-    /* border: black solid 1px; */
+    border: black solid 1px;
     margin: 10px 0px;
     padding: 10px;
     border-radius: 5px;
-}
+} */
 
 #user-name {
     font-style: italic;
@@ -301,4 +301,9 @@ input{
     margin: 10px 0px;
     padding: 10px;
     border-radius: 5px;
+}
+
+.login-button{
+    display: flex;
+    justify-content: end;
 }

@@ -27,8 +27,8 @@ block content
                                 input(type="hidden" name="_csrf" value=csrfToken)
                                 button(class="confirm-delete-button" type="submit") Confirm
                             button(class="cancel-delete-button" type="submit") Cancel
-            .question-answer-details
-                if question.Answers
+            if question.Answers && question.Answers.length>0
+                .question-answer-details
                     each answer in question.Answers
                         div(class=`answer-container${answer.id}`)
                             p(id="user-name")= answer.User.userName
