@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
 
     let count = 0;
+    
     const addComment = document.querySelectorAll('.open-comment-button');
 
     addComment.forEach((answer) => {
