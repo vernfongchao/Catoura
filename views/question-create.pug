@@ -1,4 +1,4 @@
-extends layout.pug 
+extends layout.pug
 
 include utils
 
@@ -10,12 +10,12 @@ block content
             .question-input
                 label Title
                 input(type="text" name= 'title')
-            .question-content        
+            .question-content
                 label Content
                 textarea(name= 'content')
             div(class= "add-topic-question")
                 select(name='topicId')
                     each topic in topics
-                        option(value=topic.id) #{topic.title}
-            .question-form-button 
+                        option(value=topic.id)= topic.title
+            .question-form-button
                 button Submit

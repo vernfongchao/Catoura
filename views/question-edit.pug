@@ -8,10 +8,10 @@ block content
         form(action=`/questions/${question.id}` method='post')
             input(type="hidden" name="_csrf" value=csrfToken)
             .question-input
-                label Title
-                input(type='text' name= 'title' value= `${question.title}`)
-            .question-content        
-                label Content
-                input(type='text' name= 'content' value= `${question.content}`)
-            .question-form-button 
+                label Title:
+                input(type='text' name= 'title' value= `${question.title}` id="question-input")
+            .question-content
+                label
+                textarea(name= 'content' id="question-content")= question.content
+            .question-form-button
                 button Submit
