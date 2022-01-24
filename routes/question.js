@@ -3,28 +3,17 @@ const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const { login, logout, requireAuth } = require('../auth');
 const db = require('../db/models');
-const { User, Question, Answer, Topic,Comment } = db;
-const { csrfProtection, questionValidators, asyncHandler } = require('./utils');
+const { User, Question, Answer, Topic,Comment,Question_Topic } = db;
+const { csrfProtection,topicValidators, questionValidators, asyncHandler } = require('./utils');
 
 
-router.get('/', asyncHandler(async (req, res) => {
-    const questions = await Question.findAll();
-    const topics = await Topic.findAll();
 
-    res.render('question-collection', {
-        title: 'Home',
-        questions,
-        topics
-    });
-}));
-
-
-router.get('/myquestions', requireAuth, csrfProtection,asyncHandler(async (req, res) => {
+router.get('/', requireAuth, csrfProtection,asyncHandler(async (req, res) => {
     //const userId = res.locals.user.id
     const questions = await Question.findAll({ where: { userId: res.locals.user.id } });
     const topics = await Topic.findAll();
 
-    res.render('questions-mine', {
+    res.render('question-collection', {
         title: 'Home',
         questions,
         topics,
@@ -34,27 +23,34 @@ router.get('/myquestions', requireAuth, csrfProtection,asyncHandler(async (req, 
 
 
 router.get('/new', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
+    const topics = await Topic.findAll()
 
-    res.render('question-create', { title: 'Question Form', csrfToken: req.csrfToken() })
+    res.render('question-create', { title: 'Question Form', topics, csrfToken: req.csrfToken() })
 }))
 
-router.post('/', requireAuth, questionValidators, csrfProtection, asyncHandler(async (req, res) => {
+router.post('/', requireAuth,topicValidators, questionValidators, csrfProtection, asyncHandler(async (req, res) => {
 
+    
     const { userId } = req.session.auth
     const {
         title,
+        topicId,
         content
     } = req.body;
-
+    
     const question = Question.build({
         title,
         content,
         userId
     });
-
+    
     const validatorErrors = validationResult(req);
     if (validatorErrors.isEmpty()) {
         await question.save();
+        await Question_Topic.create({
+            topicId,
+            questionId: question.id
+        });
         res.redirect(`/questions/${question.id}`);
     } else {
         const errors = validatorErrors.array().map((error) => error.msg);

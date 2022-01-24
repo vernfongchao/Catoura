@@ -13,5 +13,9 @@ block content
             .question-content        
                 label Content
                 textarea(name= 'content')
+            div(class= "add-topic-question")
+                select(name='topicId')
+                    each topic in topics
+                        option(value=topic.id) #{topic.title}
             .question-form-button 
                 button Submit

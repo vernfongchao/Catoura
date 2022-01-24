@@ -104,7 +104,7 @@ router.post('/questions/add', requireAuth, csrfProtection, asyncHandler(async (r
         questionId,
     } = req.body;
 
-    const jointq = await Question_Topic.create({
+    await Question_Topic.create({
         topicId,
         questionId
     });

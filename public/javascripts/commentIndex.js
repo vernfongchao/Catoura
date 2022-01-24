@@ -13,9 +13,9 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
     let commentFormTracker = {}
 
-    let commentFormTracker2 = {}
 
-
+    let count = 0;
+    
     const addComment = document.querySelectorAll('.open-comment-button');
 
     addComment.forEach((answer) => {
@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
                 commentFormTracker[e.target.id] = true;
 
-                let state = true
+
                 e.preventDefault()
                 e.stopPropagation()
 
@@ -41,7 +41,9 @@ document.addEventListener("DOMContentLoaded", (e) => {
                 const modal = document.querySelector(`#submit-container-${answerId}`);
                 modal.style.display = "block";
 
-
+                if (count > 0) {
+                    return;
+                }
 
                 const commentForm = document.querySelector(`#comment-form-${answerId}`)
                 console.log('is this printing twice?=====')
@@ -50,11 +52,11 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
                     commentFormTracker = {};
 
-
+                    count++;
 
                     e.preventDefault()
                     e.stopPropagation()
-                    state = false
+
                     const commentData = new FormData(commentForm);
                     const answerId = commentData.get("answerId")
                     const content = commentData.get("content")
@@ -70,15 +72,15 @@ document.addEventListener("DOMContentLoaded", (e) => {
                         }
                     })
                     const data = await res.json()
+                    alert("Comment Posted!")
                     if (data.message === "Success") {
-                        if (state === false) {
-                            state = true
+
                             const commentContent = document.querySelector(`#comment-content-${answerId}`)
                             console.log(commentContent)
                             commentContent.value = ""
                             console.log("this works")
                             modal.style.display = "none"
-                        }
+                        
                     }
                 })
 

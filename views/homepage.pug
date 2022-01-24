@@ -1,16 +1,30 @@
 extends layout.pug
 
 block content
-  div
-  h2 Users:
-    each user in users
-      span= user.userName
-  h2 Questions:
-    each question in questions
-      span= question.title
-  h2 Answers:
-    each answer in answers
-      span= answer.content
-  h2 Replies:
-    each reply in replies
-      span= reply.content
+    .questions-details-container
+        .topic-container
+            .new-topic-button
+                a(href='/topics/new')
+                    button(class= 'nav-button right') Add Topic
+            h2 Topics
+                ul(class= "topic-ul-container")
+                    each topic in topics
+                        li
+                          a(href=`/topics/${topic.id}`)= topic.title
+        .question-container
+            .new-question-button
+                a(href='/questions/new')
+                    button(class= 'nav-button right') Add Question
+            h2 Questions
+                ul(class= "question-ul-container")
+                    each question in questions
+                        li
+                            a(href=`/questions/${question.id}`)= question.title
+                            p(class="questions-collection-conntent")= question.content
+                            if locals.authenticated
+                                a(href=`/answers/${question.id}/add`)
+                                    button Add Answer
+                                //- a(href='/')
+                                //-     button Upvote
+                                //- a(href='/')
+                                //-     button Downvote
