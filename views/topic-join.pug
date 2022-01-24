@@ -19,6 +19,7 @@ block content
             tbody
                 each question in topic.Questions
                     tr
-                        td= question.title
+                      td
+                        a(href= `/questions/${question.id}`)= question.title
   else
         h3 There's no question with any #{topic.title}'s topic yet ~(=^‥^)ノ☆

@@ -1,29 +1,29 @@
 extends layout.pug
 
 block content
-    .questions-details-container
-        .topic-container
-            .new-topic-button
-                a(href='/topics/new')
-                    button(class= 'nav-button right') Add Topic
-            h2 Topics
-                ul(class= "topic-ul-container")
-                    each topic in topics
-                        li
-                          a(href=`/topics/${topic.id}`)= topic.title
-        .question-container
-            .new-question-button
-                a(href='/questions/new')
-                    button(class= 'nav-button right') Add Question
-            h2 Questions
-                ul(class= "question-ul-container")
-                    each question in questions
-                        li
-                            a(href=`/questions/${question.id}`)= question.title
-                            p(class="questions-collection-conntent")= question.content
-                            if locals.authenticated
-                                a(href=`/answers/${question.id}/add`)
-                                    button Add Answer
+  .questions-details-container
+    .topic-container
+        .new-topic-button
+          a(href='/topics/new')
+              button(class= 'nav-button right') Add Topic
+        h2 Topics
+          ul(class= "topic-ul-container")
+            each topic in topics
+              li(class= "topics-li-containers")
+                a(href=`/topics/${topic.id}`)= topic.title
+    .question-container
+      .new-question-button
+          a(href='/questions/new')
+            button(class= 'nav-button right') Add Question
+      h2 Questions
+        ul(class= "question-ul-container")
+          each question in questions
+            li(class= `q-containers`)
+              a(href=`/questions/${question.id}`)= question.title
+              p(class="questions-collection-conntent")= question.content
+              if locals.authenticated
+                a(href=`/answers/${question.id}/add`)
+                  button Add Answer
                                 //- a(href='/')
                                 //-     button Upvote
                                 //- a(href='/')
