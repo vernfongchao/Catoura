@@ -3,15 +3,16 @@ extends layout.pug
 include utils.pug
 
 block content
-  +validationErrorSummary(errors)
-  form(action='/users/login' method='post')
-    input(type='hidden' name='_csrf' value=csrfToken)
-    +field('Email Address', 'email', email)
-    +field('Password', 'password', null, 'password')
-    div()
-      button(type='submit') Login
-      a(href='/') Cancel
-  div
-    p: a(href='/users/signup') Don't have an account?
-    div
-        p: a(href='/users/login') Demo Log-in
+  .login-container
+    +validationErrorSummary(errors)
+    form(action='/users/login' method='post')
+      input(type='hidden' name='_csrf' value=csrfToken)
+      +field('Email Address', 'email', email)
+      +field('Password', 'password', null, 'password')
+      div()
+        button(type='submit') Login
+        a(href='/') Cancel
+    div(class="login-link")
+      p: a(href='/users/signup') Don't have an account?
+      div
+        p: a(href="/users/demo") Demo Log-in

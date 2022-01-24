@@ -4,12 +4,12 @@ block content
     h2 My Answers:
     if answers && answers.length > 0
         table
-            thead(class='thead-dark')
+            thead
                 tr
                 th Question
                 th My Answers
-                th Upvotes
-                th Downvotes
+                //- th Upvotes
+                //- th Downvotes
                 th Delete
                 th Edit
             tbody
@@ -17,8 +17,8 @@ block content
                     tr
                         td= questions[answer.questionId]
                         td= answer.content
-                        td= upvotes[answer.id]
-                        td= downvotes[answer.id]
+                        //- td= upvotes[answer.id]
+                        //- td= downvotes[answer.id]
                         td
                             //- a(href=`/users/answers/${answer.id}` role='button') Delete
                             form(action=`/answers/delete/${answer.id}` method='get')

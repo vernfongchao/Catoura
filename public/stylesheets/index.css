@@ -43,6 +43,7 @@ body{
 
 .questions-details-container{
     display: flex;
+    margin: auto;
 }
 .topic-container{
     margin-left: 20%;
@@ -71,18 +72,24 @@ body{
 
 .question-container{
     width: 600px;
-
     margin-right: 20%;
     margin-top: 100px;
     display:flex;
     flex-direction: column;
 }
 .q-containers{
+    background-color: white;
+    width: 550px;
     border: black solid 1px;
     margin: 10px 0px;
     padding: 10px;
     border-radius: 5px;
 }
+
+.q-containers:hover {
+    background-color: rgb(238, 238, 238);
+}
+
 .question-ul-container{
     list-style-type: none;
     padding: 0px;
@@ -99,12 +106,12 @@ body{
     margin-top: 50px;
     margin-left: 37%;
     padding-top: 15px;
-    border: 3px solid black;
+    border: 2px solid black;
     border-radius: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
 }
 
 .confirm-modal {
@@ -118,7 +125,7 @@ body{
     border-radius: 15px
 }
 
-/* 
+/*
 .confirm-modal-overlay {
     display: none;
     z-index: 1;
@@ -140,8 +147,8 @@ textarea {
     font-weight: 500;
     font-size:12px;
     line-height: 1.4;
-    width: 200px;
-    height: 100px;
+    width: 400px;
+    height: 200px;
     transition: all 0.2s;
     resize: none;
     display: flex;
@@ -156,4 +163,142 @@ textarea {
 
 .questions-details-container{
     background-color: rgb(241,242,242);
+}
+
+body {
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    text-decoration: none;
+    color: black;
+}
+
+a {
+    color: inherit;
+}
+
+.topics-li-containers a {
+    color: rgb(104, 104, 104);
+}
+
+.login-link {
+    color: blue;
+    margin: 10px;
+}
+
+.login-container {
+    width: 500px;
+    margin-top: 50px;
+    margin-left: 37%;
+    padding-top: 15px;
+    border: 2px solid black;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.sign-up-element {
+    padding: 8px;
+}
+
+fieldset{
+    background-color: #f1f1f1;
+    margin-bottom: 12px;
+    overflow: hidden;
+}
+
+label{
+    cursor: pointer;
+    display: inline-block;
+    padding: 3px 6px;
+    text-align: right;
+    width: 150px;
+    vertical-align: top;
+}
+
+input{
+    font-size: inherit;
+}
+
+
+.sign-up-button-container{
+    display: flex;
+    justify-content: center;
+}
+
+.errors-list {
+    margin: 15px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid red;
+    background-color: rgb(245, 202, 202, 0.5);
+}
+
+.create-question-form {
+    height: 400px;
+    width: 500px;
+    margin-top: 50px;
+    margin-left: 37%;
+    padding-top: 15px;
+    border: 2px solid black;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.question-form-button {
+    display: flex;
+    justify-content: center;
+    align-items: space-between;
+}
+
+#question-input {
+    width: 270px;
+}
+
+.create-question-form label {
+    display: flex;
+    justify-content: left;
+}
+
+.page-container {
+    display: flex;
+    justify-content: center;
+}
+
+.post-display {
+    background-color: white;
+    width: 550px;
+    /* border: black solid 1px; */
+    margin: 10px 0px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#user-name {
+    font-style: italic;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.question-container-detail {
+    background-color: white;
+    width: 550px;
+    border: black solid 1px;
+    margin: 10px 0px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.question-answer-details {
+    background-color: white;
+    width: 550px;
+    border: black solid 1px;
+    margin: 10px 0px;
+    padding: 10px;
+    border-radius: 5px;
 }

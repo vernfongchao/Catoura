@@ -3,12 +3,12 @@ const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const { login, logout, requireAuth } = require('../auth');
 const db = require('../db/models');
-const { User, Question, Answer, Topic,Comment,Question_Topic } = db;
-const { csrfProtection,topicValidators, questionValidators, asyncHandler } = require('./utils');
+const { User, Question, Answer, Topic, Comment, Question_Topic } = db;
+const { csrfProtection, topicValidators, questionValidators, asyncHandler } = require('./utils');
 
 
 
-router.get('/', requireAuth, csrfProtection,asyncHandler(async (req, res) => {
+router.get('/', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
     //const userId = res.locals.user.id
     const questions = await Question.findAll({ where: { userId: res.locals.user.id } });
     const topics = await Topic.findAll();
@@ -28,22 +28,23 @@ router.get('/new', requireAuth, csrfProtection, asyncHandler(async (req, res) =>
     res.render('question-create', { title: 'Question Form', topics, csrfToken: req.csrfToken() })
 }))
 
-router.post('/', requireAuth,topicValidators, questionValidators, csrfProtection, asyncHandler(async (req, res) => {
+router.post('/', requireAuth, topicValidators, questionValidators, csrfProtection, asyncHandler(async (req, res) => {
 
-    
+    const topics = await Topic.findAll()
+
     const { userId } = req.session.auth
     const {
         title,
         topicId,
         content
     } = req.body;
-    
+
     const question = Question.build({
         title,
         content,
         userId
     });
-    
+
     const validatorErrors = validationResult(req);
     if (validatorErrors.isEmpty()) {
         await question.save();
@@ -56,6 +57,7 @@ router.post('/', requireAuth,topicValidators, questionValidators, csrfProtection
         const errors = validatorErrors.array().map((error) => error.msg);
         res.render('question-create', {
             title: 'Question Form',
+            topics,
             question,
             errors,
             csrfToken: req.csrfToken(),
@@ -77,7 +79,7 @@ router.get('/:id(\\d+)', csrfProtection, asyncHandler(async (req, res) => {
                     model: Answer,
                     include: [
                         {
-                            model : User
+                            model: User
                         },
                         {
                             model: Comment,
@@ -93,13 +95,13 @@ router.get('/:id(\\d+)', csrfProtection, asyncHandler(async (req, res) => {
     const answers = []
     const comments = []
     const users = []
-    question.Answers.forEach((answer)=>{
+    question.Answers.forEach((answer) => {
         answers.push(answer)
     })
-    answers.forEach((answer) =>{
+    answers.forEach((answer) => {
         comments.push(...answer.Comments)
     })
-    comments.forEach((comment)=>{
+    comments.forEach((comment) => {
         users.push(comment.User)
     })
 

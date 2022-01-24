@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
 
     let count = 0;
-    
+
     const addComment = document.querySelectorAll('.open-comment-button');
 
     addComment.forEach((answer) => {
@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
                             commentContent.value = ""
                             console.log("this works")
                             modal.style.display = "none"
-                        
+
                     }
                 })
 
@@ -155,7 +155,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
                     let block = `
                     <div class="comment-${comment.id}">
                       <div class="comment-body-${comment.id}">
-                        <p class="card-text">${comment.User.userName}</p>
+                      <p class="card-text" id="user-name">${comment.User.userName}</p>
                         <p class="card-text">${comment.content}</p>
                             <a href='/comments/${comment.id}/delete'></a>
                                 <button id="comment-delete-${comment.id}" class="comment-delete-buttons"> Delete Comment
@@ -167,7 +167,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
                     let block = `
                 <div class="comment-${comment.id}">
                   <div class="comment-body-${comment.id}">
-                    <p class="card-text">${comment.User.userName}</p>
+                    <p class="card-text" id="user-name">${comment.User.userName}</p>
                     <p class="card-text">${comment.content}</p>
                   </div>
                 </div>
