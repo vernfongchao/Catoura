@@ -1,32 +1,33 @@
 extends layout.pug
 
 block content
-    h2 My Answers:
-    if answers && answers.length > 0
-        table
-            thead(class='thead-dark')
-                tr
-                th Question
-                th My Answers
-                th Upvotes
-                th Downvotes
-                th Delete
-                th Edit
-            tbody
-                each answer in answers
+    .myAnswers-page-container
+        h2 My Answers
+        if answers && answers.length > 0
+            table
+                thead(class='thead-dark')
                     tr
-                        td= questions[answer.questionId]
-                        td= answer.content
-                        td= upvotes[answer.id]
-                        td= downvotes[answer.id]
-                        td
-                            //- a(href=`/users/answers/${answer.id}` role='button') Delete
-                            form(action=`/answers/delete/${answer.id}` method='get')
-                                input(type='hidden' name='_csrf' value=csrfToken)
-                                button(type='submit') Delete
-                        td
-                            form(action=`/answers/edit/${answer.id}` method='get')
-                                input(type='hidden' name='_csrf' value=csrfToken)
-                                button(type='submit') Edit
-    else
-        h2 No answers yet (^・ω・^=)~
+                    th Question
+                    th My Answers
+                    th Upvotes
+                    th Downvotes
+                    th Delete
+                    th Edit
+                tbody
+                    each answer in answers
+                        tr
+                            td= questions[answer.questionId]
+                            td= answer.content
+                            //- td= upvotes[answer.id]
+                            //- td= downvotes[answer.id]
+                            td
+                                //- a(href=`/users/answers/${answer.id}` role='button') Delete
+                                form(action=`/answers/delete/${answer.id}` method='get')
+                                    input(type='hidden' name='_csrf' value=csrfToken)
+                                    button(type='submit') Delete
+                            td
+                                form(action=`/answers/edit/${answer.id}` method='get')
+                                    input(type='hidden' name='_csrf' value=csrfToken)
+                                    button(type='submit') Edit
+        else
+            h2 No answers yet (^・ω・^=)~
