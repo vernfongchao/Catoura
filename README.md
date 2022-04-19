@@ -49,6 +49,7 @@ Routes that return an HTML page that the user can interact with
 - Full CRUD Features for Questions
 - Full CRUD Features for Answers to a Question
 - Full CRUD features for Comments to an Answer
+- CRUD features for Topics and allowing questions to add Topics
 
 ### Future Features
 
