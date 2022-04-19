@@ -44,6 +44,60 @@ Routes that return an HTML page that the user can interact with
 ### My Topics:
 ![image](https://user-images.githubusercontent.com/91238232/163909319-bda2905d-556d-4e86-9049-e88c3c44f442.png)
 
+## Features
 
+- Full CRUD Features for Questions
+- Full CRUD Features for Answers to a Question
+- Full CRUD features for Comments to an Answer
+
+### Future Features
+
+- CRUD features for upvote and downvotes on question,answers, and comments
+- Setup AWS for Images for Answer and Questions
+- Rich Text Libraries for fancy text fields
+
+## Technologies Used
+
+- React.js
+- Node.js
+- Express
+- PostgreSQL
+- PUG
+
+## Local Installation
+
+1. Clone this repo
+
+   - `git clone https://github.com/vernfongchao/Catoura.git`
+
+2. Install dependencies from the root directoy
+
+   - `npm install`
+
+3. Create a `PostgreSQL` user with `CREATEDB` and `Password` 
+
+   - `CREATE USER <name> with CREATEDB PASSWORD <'password'>`
+
+4. Create a `.env` in the backend directory based on the `.env.example` found within the backend directory
+
+5. Enter your username and password information into your `.env` file along with your desired database name, a secured combination of characters for your `SESSION_SECRET`
+
+6. CREATE Database,Migrate, and Seed models in your backend terminal 
+
+   Method 1
+   
+   - `npx dotenv sequelize db:create`
+   - `npx dotenv sequelize db:migrate`
+   - `npx dotenv sequelize db:seed:all`
+
+   Method 2
+   
+   - `npm run db:setup`
+
+7. Start the server in the terminal
+
+   - `npm start`
+
+8. There is a Demo user or create an account to begin using MvDc
 
 
