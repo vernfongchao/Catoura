@@ -7,7 +7,7 @@ Catoura, a [Quora](https://www.quora.com/) clone, is a forum application that al
 
 ## Live Site
 
-A Live deployment of [Stay-The-Night](https://stay-the-night.herokuapp.com/) is hosted on [heroku](https://heroku.com)
+A Live deployment of [Catoura](https://catoura.herokuapp.com/) is hosted on [heroku](https://heroku.com)
 
 ## [Feature List](https://github.com/vernfongchao/Catoura/wiki/MVP-Feature-List)
 
