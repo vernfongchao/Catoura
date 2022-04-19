@@ -1,6 +1,26 @@
-# Express Project Skeleton
+Welcome to the Catoura wiki!
 
-Use this project skeleton as a starting point for structuring your app. Things to note
-* Sequelize configuration has not yet been added -- you will need to set that up yourself
-* You may find yourself wanting to use javascript -- js files can be added in `public/javascripts` and should be appended to the Pug templates as needed
-* CSS files can go in `public/stylesheets` and also will need to be added to Pug templates
+This project is based off of [Quora](https://www.quora.com/) but for cats!
+
+Catoura, a [Quora](https://www.quora.com/) clone, is a forum application that allow users to post questions and answers that can be viewed by other cats.
+
+## [Feature List](https://github.com/vernfongchao/Catoura/wiki/MVP-Feature-List)
+
+List of features needed for the Minimum Viable Product (MVP)
+
+## [User Stories](https://github.com/vernfongchao/Catoura/wiki/User-Stories)
+
+List of user stories for each feature
+
+## [API Documentation](https://github.com/vernfongchao/Catoura/wiki/API-Documentation)
+
+API routes that return JSON and that will be used by the frontend routes
+
+
+## [Database Schema](https://github.com/vernfongchao/Catoura/wiki/Database-Schema)
+
+Schema of the PostgresQL database
+
+## [Frontend Routes](https://github.com/vernfongchao/Catoura/wiki/Frontend-Routes)
+
+Routes that return an HTML page that the user can interact with
