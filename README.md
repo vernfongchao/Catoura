@@ -99,6 +99,6 @@ Routes that return an HTML page that the user can interact with
 
    - `npm start`
 
-8. There is a Demo user or create an account to begin using MvDc
+8. There is a Demo user or create an account to begin using Catoura
 
 
